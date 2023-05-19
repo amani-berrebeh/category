@@ -25,11 +25,8 @@ const Dashboard = () => {
                                 <Widgets />
                             </Row>
                         </Col>
-                        <Revenue />
-                        <TopSalesLocation />
-                    </Row>
-                    <Row>
-                        <RecentOrders />
+                        <Revenue /> 
+                         <TopSalesLocation /> 
                     </Row>
                     <Row className='widget-responsive-fullscreen'>
                         <CustomerSatisfaction />
@@ -39,6 +36,10 @@ const Dashboard = () => {
                         <NewCustomers />
                         <TopProducts />
                     </Row>
+                    <Row>
+                        <RecentOrders />
+                    </Row>
+                    
                 </Container>
             </div>
         </React.Fragment>

@@ -4,13 +4,13 @@ import App from './App';
 import { Provider } from "react-redux";
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import { configureStore } from '@reduxjs/toolkit';
-import rootReducer from './slices';
+
+import { store } from 'app/store';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-const store = configureStore({ reducer: rootReducer, devTools: true });
+
 root.render(
   <React.Fragment>
       <Provider store={store}>

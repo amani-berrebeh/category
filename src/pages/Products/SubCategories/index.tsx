@@ -2,31 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import Breadcrumb from 'Common/BreadCrumb';
 import SubCategoriesTable from './subCategoriesTable';
-import axios from 'axios';
+import { useFetchCategoriesQuery } from 'features/category/categorySlice';
+
 
 const SubCategories = () => {
 
     // const [categoryList, setCategoryList] = useState([{'nom':'','idcategory':''}])
-    const [categoryName, setCategoryName] = useState([])
-
-  useEffect(() =>{
-    const fetchData = async () => {
-        try {
-          const res = await axios.get('http://127.0.0.1:8000/category/all');
-          setCategoryName(res.data);
-          console.log(res)
-        } catch (err) {
-          console.log(err);
-        }
-      };
-      fetchData();
-    },[]);
     
-    interface cat {
-        idcategory:string,
-        nom:string
-    } 
-   
+const {data=[]}= useFetchCategoriesQuery();
 
   
 
@@ -65,7 +48,7 @@ const SubCategories = () => {
                                                     <select className="form-select" name="categorySelect" id="categorySelect"  >
                                                     <option>Choose Category</option>
                                                     {
-                                                        categoryName.map((category:cat)=> (
+                                                        data.map((category)=> (
                                                             <option value={category.nom} key={category.idcategory}>{category.nom}</option>
 
                                                         )
