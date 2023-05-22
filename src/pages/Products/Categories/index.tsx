@@ -23,13 +23,30 @@ const Categories = () => {
   const [createCategory] = useCreateCategoryMutation()
   const {data:subdata=[]}=useFetchSubCategoriesQuery()
 
-  const initialValue = {nom :" ",image:""};
+  const initialValue = {
+    idcategory: 1,
+    nom: "",
+    image: "",
+    id_parent: 1,
+    final_level: 1,
+    title: "",
+  };
 
-  const [nom, setNom] = useState("")
-  const [image, setImage]= useState("")
+  const [formData, setFormData] = useState(initialValue);
+  const { nom } = formData;
 
-  const onNomChange =(e:any) =>setNom(String(e.target.value))
-  const onImageChange =(e:any)=>setImage(String(e.target.value))
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.id]: e.target.value,
+    }));
+  };
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    createCategory(formData).then(() => setFormData(initialValue));
+  };
+
 
   // const onSubmit = async(data:any)=>{
    
@@ -125,6 +142,7 @@ const Categories = () => {
                     className="needs-validation createCategory-form"
                     id="createCategory-form"
                     noValidate
+                    onSubmit={onSubmit}
                   >
                     <input
                       type="hidden"
@@ -135,15 +153,16 @@ const Categories = () => {
                     <Row>
                       <Col xxl={12} lg={6}>
                         <div className="mb-3">
-                          <label htmlFor="categoryTitle" className="form-label">
+                          <label htmlFor="nom" className="form-label">
                             Category Title<span className="text-danger">*</span>
                           </label>
                           <input
                             type="text"
                             className="form-control"
-                            id="categoryTitle"
+                            id="nom"
                             placeholder="Enter title"
-                            onChange={onNomChange}
+                            onChange={onChange}
+                            value={formData.nom}
                             required
                           />
                           <div className="invalid-feedback">
@@ -167,7 +186,7 @@ const Categories = () => {
                       <Col xxl={12} lg={6}>
                         <div className="mb-3">
                           <label
-                            htmlFor="category-image-input"
+                            htmlFor="image"
                             className="form-label d-block"
                           >
                             Image <span className="text-danger">*</span>
@@ -176,7 +195,7 @@ const Categories = () => {
                           <div className="position-relative d-inline-block">
                             <div className="position-absolute top-100 start-100 translate-middle">
                               <label
-                                htmlFor="category-image-input"
+                                htmlFor="image"
                                 className="mb-0"
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="right"
@@ -190,10 +209,11 @@ const Categories = () => {
                               </label>
                               <input
                                 className="form-control d-none"
-                                id="category-image-input"
+                                id="image"
                                 type="file"
                                 accept="image/png, image/gif, image/jpeg"
-                                onChange={onImageChange}
+                                onChange={onChange}
+                                value={formData.image}
                               />
                             </div>
                             <div className="avatar-lg">
@@ -307,9 +327,8 @@ const Categories = () => {
                             </li>
                           </ul>
                         </div>
-                        {subdata.map((subcategory) => (
-                        
-                           
+                        { subdata.map((subcategory) => (
+
                           <ul  className="list-unstyled vstack gap-2 mb-0">
                            
                                     {subcategory.parentID === category.idcategory ? 
