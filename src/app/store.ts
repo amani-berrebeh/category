@@ -11,12 +11,16 @@ import ProfileReducer from "../slices/auth/profile/reducer";
 import DashboardReducer from "../slices/dashboard/reducer"
 import { categorySlice} from "../features/category/categorySlice"; 
 import { subCategorySlice } from "features/subCategory/subCategorySlice";
+import { produitSlice } from "../features/produit/productSlice";
+import { fournisseurSlice } from "../features/fournisseur/fournisseurSlice";
 
 
 export const store = configureStore({
     reducer: { 
         [categorySlice.reducerPath]:categorySlice.reducer,
         [subCategorySlice.reducerPath]:subCategorySlice.reducer,
+        [produitSlice.reducerPath]: produitSlice.reducer,
+        [fournisseurSlice.reducerPath]: fournisseurSlice.reducer,
     Layout: LayoutReducer,
     Calendar: CalendarReducer,
     Login: LoginReducer,
@@ -26,7 +30,7 @@ export const store = configureStore({
     Dashboard: DashboardReducer
     },
     middleware: (getDefaultMiddleware) => {
-        return getDefaultMiddleware().concat([categorySlice.middleware,subCategorySlice.middleware])
+        return getDefaultMiddleware().concat([categorySlice.middleware,subCategorySlice.middleware, produitSlice.middleware, fournisseurSlice.middleware])
     }
 })
 

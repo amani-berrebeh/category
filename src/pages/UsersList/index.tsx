@@ -7,26 +7,14 @@ import { userList } from "Common/data";
 import Flatpickr from "react-flatpickr";
 import dummyImg from "../../assets/images/users/user-dummy-img.jpg"
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+
 
 const UsersList = () => {
     document.title = "Users List | Toner eCommerce + Admin React Template";
 
 
     // API TOTAL FOURNISSEUR
-    const [totalfournisseur,setTotalfournisseur]=useState([]);
-    useEffect(() =>{
-        const fetchData = async () => {
-            try {
-              const res = await axios.get('http://localhost:8000/fournisseur/all');
-              setTotalfournisseur(res.data);
-              console.log(res)
-            } catch (err) {
-              console.log(err);
-            }
-          };
-          fetchData();
-        },[]);
+   
 
 
 
@@ -177,7 +165,7 @@ const UsersList = () => {
                                     </svg>
                                 </div>
                                 <Card.Body className="p-4 z-1 position-relative">
-                                    <h4 className="fs-22 fw-semibold mb-3"><CountUp end={totalfournisseur.length} /> </h4>
+                                    <h4 className="fs-22 fw-semibold mb-3"><CountUp end={234} /> </h4>
                                     <p className="mb-0 fw-medium text-uppercase fs-14">Total des fournisseurs</p>
                                 </Card.Body>
                             </Card>

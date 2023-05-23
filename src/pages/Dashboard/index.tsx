@@ -28,7 +28,7 @@ const Dashboard = () => {
                         <Revenue /> 
                          <TopSalesLocation /> 
                     </Row>
-                    <Row className='widget-responsive-fullscreen'>
+                    {/* <Row className='widget-responsive-fullscreen'>
                         <CustomerSatisfaction />
                         <StockReport />
                         <ProductDelivery />
@@ -38,7 +38,7 @@ const Dashboard = () => {
                     </Row>
                     <Row>
                         <RecentOrders />
-                    </Row>
+                    </Row> */}
                     
                 </Container>
             </div>

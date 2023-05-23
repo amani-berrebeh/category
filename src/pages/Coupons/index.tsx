@@ -7,8 +7,20 @@ import { Link } from 'react-router-dom';
 import Flatpickr from "react-flatpickr";
 
 import offerbanner from "../../assets/images/ecommerce/offer-banner.jpg";
+import { useDeleteFournisseurMutation, useFetchFournisseurQuery } from 'features/fournisseur/fournisseurSlice';
+import { Fournisseur } from './../../features/fournisseur/fournisseurSlice';
+
+
 
 const Coupons = () => {
+
+const  { data =[] } = useFetchFournisseurQuery();
+const [deleteFournisseur] = useDeleteFournisseurMutation();
+
+const deleteHandler = async (id: any) => {
+  await deleteFournisseur(id);
+};
+
 
     document.title = "Coupons | Toner eCommerce + Admin React Template";
 
@@ -18,57 +30,59 @@ const Coupons = () => {
     const columns = useMemo(
         () => [
             {
-                Header: "Discount",
+                Header: "IdFournisseur",
                 disableFilters: true,
                 filterable: true,
-                accessor: (cellProps: any) => {
-                    return (
-                        <h5 className="mb-0 fs-16">{cellProps.discount}</h5>
-                    )
-                },
+                accessor: "idfournisseur"
             },
             {
-                Header: "Coupon Title",
-                accessor: "couponTitle",
+                Header: "raison sociale",
+                accessor: "raison_sociale",
                 disableFilters: true,
                 filterable: true,
             },
             {
-                Header: "Code",
-                accessor: "code",
+                Header: "Adresse",
+                accessor: "adresse",
                 disableFilters: true,
                 filterable: true,
             },
             {
-                Header: "Product Type",
-                accessor: "productType",
+                Header: "Telephone",
+                accessor: "tel",
                 disableFilters: true,
                 filterable: true,
             },
             {
-                Header: "Start Date",
-                accessor: "startDate",
+                Header: "E-mail",
+                accessor: "mail",
                 disableFilters: true,
                 filterable: true,
             },
             {
-                Header: "End Date",
-                accessor: "endDate",
+                Header: "Matricule fiscale",
+                accessor: "matricule_fiscale",
                 disableFilters: true,
                 filterable: true,
             },
             {
-                Header: "Status",
+                Header: "RIB",
+                accessor: "rib",
                 disableFilters: true,
                 filterable: true,
-                accessor: (cellProps: any) => {
-                    switch (cellProps.status) {
-                        case "Active":
-                            return (<span className="badge badge-soft-success text-uppercase"> {cellProps.status}</span>)
-                        case "Expired":
-                            return (<span className="badge badge-soft-danger text-uppercase"> {cellProps.status}</span>)
+            },
+            {
+                Header: "Etat",
+                disableFilters: true,
+                filterable: true,
+                accessor: (fournisseur:Fournisseur) => {
+                    switch (fournisseur.etat) {
+                        case 0:
+                            return (<span className="badge badge-soft-success text-uppercase"> inactif</span>)
+                        case 1:
+                            return (<span className="badge badge-soft-danger text-uppercase"> actif</span>)
                         default:
-                            return (<span className="badge badge-soft-success text-uppercase"> {cellProps.status}</span>)
+                            return (<span className="badge badge-soft-success text-uppercase"> inactif</span>)
                     }
                 },
             },
@@ -76,17 +90,17 @@ const Coupons = () => {
                 Header: "Action",
                 disableFilters: true,
                 filterable: true,
-                accessor: (cellProps: any) => {
+                accessor: (fournisseur:Fournisseur) => {
                     return (
                         <ul className="hstack gap-2 list-unstyled mb-0">
                             <li>
-                                <Link to="#couponDetails" data-bs-toggle="offcanvas" className="badge badge-soft-dark view-item-btn" onClick={() => { setShowCouponsDetails(cellProps); setShowCoupons(!showCoupons) }}>View</Link>
+                                <Link to="#couponDetails" data-bs-toggle="offcanvas" className="badge badge-soft-dark view-item-btn" onClick={() => { setShowCouponsDetails(fournisseur); setShowCoupons(!showCoupons) }}>View</Link>
                             </li>
                             <li>
                                 <Link to="#showModal" className="badge badge-soft-primary edit-item-btn" data-bs-toggle="modal">Edit</Link>
                             </li>
                             <li>
-                                <Link to="#deleteModal" data-bs-toggle="modal" className="badge badge-soft-danger remove-item-btn">Delete</Link>
+                                <Link to="#deleteModal" onClick={()=>deleteHandler(fournisseur.idfournisseur)} data-bs-toggle="modal" className="badge badge-soft-danger remove-item-btn">Delete</Link>
                             </li>
                         </ul>
                     )
@@ -133,7 +147,7 @@ const Coupons = () => {
                                         <div className="table-responsive table-card">
                                             <TableContainer
                                                 columns={(columns || [])}
-                                                data={(couponsList || [])}
+                                                data={(data || [])}
                                                 // isGlobalFilter={false}
                                                 iscustomPageSize={false}
                                                 isBordered={false}

@@ -11,7 +11,7 @@ import {
 import { Link } from "react-router-dom";
 import Breadcrumb from "Common/BreadCrumb";
 
-import { useFetchCategoriesQuery } from "features/category/categorySlice";
+import { useFetchCategoriesQuery , useDeleteCategoryMutation } from "features/category/categorySlice";
 import { useFetchSubCategoriesQuery } from "features/subCategory/subCategorySlice";
 import {useCreateCategoryMutation} from "features/category/categorySlice"
 // import { *asYup } from 'yup';
@@ -22,6 +22,12 @@ const Categories = () => {
   const { data =[] } = useFetchCategoriesQuery();
   const [createCategory] = useCreateCategoryMutation()
   const {data:subdata=[]}=useFetchSubCategoriesQuery()
+  const [deleteCategory] = useDeleteCategoryMutation();
+
+
+  const deleteHandler = async (id: any) => {
+    await deleteCategory(id);
+  };
 
   const initialValue = {
     idcategory: 1,
@@ -33,7 +39,7 @@ const Categories = () => {
   };
 
   const [formData, setFormData] = useState(initialValue);
-  const { nom } = formData;
+  const { nom, image } = formData;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prevState) => ({
@@ -46,6 +52,33 @@ const Categories = () => {
     e.preventDefault();
     createCategory(formData).then(() => setFormData(initialValue));
   };
+
+  const handleFileUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = (document.getElementById("image") as HTMLFormElement).files[0];
+    const base64 = await convertToBase64(file);
+    console.log(base64);
+    setFormData({ ...formData, nom, image: base64 as string });
+  };
+
+  function convertToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        const base64String = fileReader.result as string;
+        const base64Data = base64String.split(",")[1]; // Extract only the Base64 data
+
+        resolve(base64Data);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+      fileReader.readAsDataURL(file);
+    });
+  }
+
+
 
 
   // const onSubmit = async(data:any)=>{
@@ -211,9 +244,9 @@ const Categories = () => {
                                 className="form-control d-none"
                                 id="image"
                                 type="file"
-                                accept="image/png, image/gif, image/jpeg"
-                                onChange={onChange}
-                                value={formData.image}
+                                accept=".png, .gif, .jpeg, .jpg"
+                                onChange={(e)=>handleFileUpload(e)}
+                                
                               />
                             </div>
                             <div className="avatar-lg">
