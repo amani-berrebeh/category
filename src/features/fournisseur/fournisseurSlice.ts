@@ -1,17 +1,17 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export interface Fournisseur {
-    idfournisseur: number,
-    raison_sociale: string,
-    adresse:  string,
-    tel: number,
-    mail: string,
-    type: number,
-    matricule_fiscale: number,
-    logo: string ,
-    rib: number,
-    etat: number,
-    piecejointes: string
+    idfournisseur: number;
+  raison_sociale: string;
+  adresse: string;
+  tel: number;
+  mail: string;
+  type: number;
+  matricule_fiscale: number;
+  logo: string;
+  rib: number;
+  etat: number;
+  piecejointes: string;
 }
 
 export const fournisseurSlice = createApi({

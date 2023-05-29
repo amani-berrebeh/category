@@ -19,8 +19,8 @@ const TopSalesLocation = () => {
                 <Card className="card-height-100">
                     <Card.Header>
                         <div className="d-flex align-items-center">
-                            <h6 className="card-title flex-grow-1 mb-0">Top Sales Location</h6>
-                            <div className="flex-shrink-0">
+                            <h6 className="card-title flex-grow-1 mb-0">Ajouter Note</h6>
+                            {/* <div className="flex-shrink-0">
                                 <Dropdown className="card-header-dropdown">
                                     <Dropdown.Toggle as={CustomDropdownToggle} href="#"  className="text-reset dropdown-btn">
                                         <span className="text-muted">Report<i className="mdi mdi-chevron-down ms-1"></i></span>
@@ -31,10 +31,10 @@ const TopSalesLocation = () => {
                                         <Dropdown.Item>Import</Dropdown.Item>
                                     </Dropdown.Menu>
                                 </Dropdown>
-                            </div>
+                            </div> */}
                         </div>
                     </Card.Header>
-                    <Card.Body className='custom-vector-map'>
+                    {/* <Card.Body className='custom-vector-map'>
                         <VectorMap {...world} style={{ height: "255px"}} />
                         <div id="world-map-line-markers" data-colors='["--tb-light"]'></div>
 
@@ -127,7 +127,7 @@ const TopSalesLocation = () => {
                                 </tbody>
                             </table>
                         </div>
-                    </Card.Body>
+                    </Card.Body> */}
                 </Card>
             </Col>
         </React.Fragment>

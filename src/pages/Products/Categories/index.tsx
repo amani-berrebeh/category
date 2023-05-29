@@ -252,9 +252,9 @@ const Categories = () => {
                             <div className="avatar-lg">
                               <div className="avatar-title bg-light rounded-3">
                                 <img
-                                  src="#"
+                                  src={`data:image/jpeg;base64,${formData.image}`}
                                   alt=""
-                                  id="category-img"
+                                  id="image"
                                   className="avatar-md h-auto rounded-3 object-fit-cover"
                                 />
                               </div>
@@ -289,7 +289,7 @@ const Categories = () => {
                       <Col xxl={12}>
                         <div className="text-end">
                           <Button variant="success" type="submit" >
-                            Add Category
+                            Ajouter Categorie
                           </Button>
                         </div>
                       </Col>
@@ -311,7 +311,7 @@ const Categories = () => {
                     <i className="ri-search-line search-icon"></i>
                   </div>
                 </Col>
-                <Col xxl={2} lg={6}>
+                {/* <Col xxl={2} lg={6}>
                   <select
                     className="form-select"
                     data-choices
@@ -328,10 +328,10 @@ const Categories = () => {
                     <option value="This Month">This Month</option>
                     <option value="Last Month">Last Month</option>
                   </select>
-                </Col>
+                </Col> */}
               </Row>
-              {data.map((category) => (
               <Row id="categories-list" >
+              {data.map((category) => (
                
                   <Col xxl={3} lg={8} >
                     <Card className="categrory-widgets overflow-hidden">
@@ -354,13 +354,14 @@ const Categories = () => {
                                 to="#"
                                 data-bs-toggle="modal"
                                 className="badge badge-soft-danger"
+                                
                               >
                                 Delete
                               </Link>
                             </li>
                           </ul>
                         </div>
-                        { subdata.map((subcategory) => (
+                        {/* { subdata.map((subcategory) => (
 
                           <ul  className="list-unstyled vstack gap-2 mb-0">
                            
@@ -371,7 +372,7 @@ const Categories = () => {
                             </li> 
                               : null} 
                           </ul>
-                        ))}
+                        ))} */}
                         <div className="mt-3">
                           <Link
                             to="#"
@@ -393,9 +394,9 @@ const Categories = () => {
                       </Card.Body>
                     </Card>
                   </Col>
+ ))}
                
               </Row>
- ))}
               {pagination && (
                 <Row id="pagination-element" className="mb-4">
                   <Col lg={12}>

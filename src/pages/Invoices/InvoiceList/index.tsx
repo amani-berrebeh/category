@@ -12,7 +12,7 @@ const InvoiceList = () => {
         <React.Fragment>
             <div className="page-content">
                 <Container fluid={true}>
-                    <Breadcrumb title="Invoice List" pageTitle="Invoices" />
+                    <Breadcrumb title="Liste des Factures" pageTitle="Factures" />
 
                     <Row>
                         <Col xl={3} md={6}>
@@ -54,18 +54,18 @@ const InvoiceList = () => {
                                 <Card.Body className="position-relative">
                                     <div className="d-flex align-items-center">
                                         <div className="flex-grow-1">
-                                            <p className="text-uppercase fs-14 fw-medium text-muted mb-0">Invoices Sent</p>
+                                            <p className="text-uppercase fs-14 fw-medium text-muted mb-0">TOTAL DES FACTURES</p>
                                         </div>
-                                        <div className="flex-shrink-0">
+                                        {/* <div className="flex-shrink-0">
                                             <h5 className="text-success fs-14 mb-0">
                                                 <i className="ri-arrow-right-up-line fs-13 align-middle"></i> +89.24 %
                                             </h5>
-                                        </div>
+                                        </div> */}
                                     </div>
                                     <div className="d-flex align-items-end justify-content-between mt-4">
                                         <div>
-                                            <h4 className="fs-24 fw-semibold mb-4"><CountUp end={559.25} decimals={2} prefix="$" suffix="k" /></h4>
-                                            <span className="badge bg-info me-1">6,258</span> <span className="text-muted align-bottom">Invoices sent</span>
+                                            <h4 className="fs-24 fw-semibold mb-4"><CountUp end={559.25} decimals={2}  /></h4>
+                                            <span className="badge bg-info me-1">6,258</span> <span className="text-muted align-bottom">nombre des factures</span>
                                         </div>
                                         <div className="avatar-sm flex-shrink-0">
                                             <span className="avatar-title bg-white text-primary rounded fs-3">
@@ -117,18 +117,18 @@ const InvoiceList = () => {
                                 <Card.Body className="position-relative">
                                     <div className="d-flex align-items-center">
                                         <div className="flex-grow-1">
-                                            <p className="text-uppercase fs-14 fw-medium text-muted mb-0">Paid Invoices</p>
+                                            <p className="text-uppercase fs-14 fw-medium text-muted mb-0">Facture payées</p>
                                         </div>
-                                        <div className="flex-shrink-0">
+                                        {/* <div className="flex-shrink-0">
                                             <h5 className="text-success fs-14 mb-0">
                                                 <i className="ri-arrow-right-up-line fs-13 align-middle"></i> +8.09 %
                                             </h5>
-                                        </div>
+                                        </div> */}
                                     </div>
                                     <div className="d-flex align-items-end justify-content-between mt-4">
                                         <div>
-                                            <h4 className="fs-24 fw-semibold mb-4"><CountUp end={409.66} decimals={2} prefix="$" suffix="k" /></h4>
-                                            <span className="badge bg-info me-1">2,451</span> <span className="text-muted">Paid by clients</span>
+                                            <h4 className="fs-24 fw-semibold mb-4"><CountUp end={409.66} decimals={2}  /></h4>
+                                            <span className="badge bg-info me-1">2,451</span> <span className="text-muted">Payées par clients</span>
                                         </div>
                                         <div className="avatar-sm flex-shrink-0">
                                             <span className="avatar-title bg-white text-success rounded fs-3">
@@ -180,18 +180,18 @@ const InvoiceList = () => {
                                 <Card.Body className="position-relative">
                                     <div className="d-flex align-items-center">
                                         <div className="flex-grow-1">
-                                            <p className="text-uppercase fs-14 fw-medium text-muted mb-0">Unpaid Invoices</p>
+                                            <p className="text-uppercase fs-14 fw-medium text-muted mb-0">Facture impayées</p>
                                         </div>
-                                        <div className="flex-shrink-0">
+                                        {/* <div className="flex-shrink-0">
                                             <h5 className="text-danger fs-14 mb-0">
                                                 <i className="ri-arrow-right-down-line fs-13 align-middle"></i> +9.01 %
                                             </h5>
-                                        </div>
+                                        </div> */}
                                     </div>
                                     <div className="d-flex align-items-end justify-content-between mt-4">
                                         <div>
-                                            <h4 className="fs-24 fw-semibold mb-4"><CountUp end={136.98} decimals={2} prefix="$" suffix="k" /></h4>
-                                            <span className="badge bg-info me-1">720</span> <span className="text-muted">Unpaid by clients</span>
+                                            <h4 className="fs-24 fw-semibold mb-4"><CountUp end={136.98} decimals={2}  /></h4>
+                                            <span className="badge bg-info me-1">720</span> <span className="text-muted">impayées par clients</span>
                                         </div>
                                         <div className="avatar-sm flex-shrink-0">
                                             <span className="avatar-title bg-white text-warning rounded fs-3">
@@ -203,7 +203,7 @@ const InvoiceList = () => {
                             </Card>
                         </Col>
 
-                        <Col xl={3} md={6}>
+                        {/* <Col xl={3} md={6}>
 
                             
                             <Card className="card-animate bg-danger-subtle border-0 overflow-hidden">
@@ -264,7 +264,7 @@ const InvoiceList = () => {
                                     </div>
                                 </Card.Body>
                             </Card>
-                        </Col>
+                        </Col> */}
                     </Row>
 
                     <InvoiceListTable />

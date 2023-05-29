@@ -98,12 +98,12 @@ const Navdata = () => {
                     link: "/invoices-list",
                     parentId: "invoice",
                 },
-                {
-                    id: "overview",
-                    label: "Overview",
-                    link: "/invoices-details",
-                    parentId: "invoice",
-                },
+                // {
+                //     id: "overview",
+                //     label: "Overview",
+                //     link: "/invoices-details",
+                //     parentId: "invoice",
+                // },
                 {
                     id: "createinvoice",
                     label: "Créer facture",
@@ -116,67 +116,40 @@ const Navdata = () => {
             id: "brands",
             label: "Charges",
             icon: "bi bi-shop",
-            link: "/brands",
+            link: "/charges",
         },
-        {
-            id: "orders",
-            label: "Stocks",
-            icon: "bi bi-cart4",
-            link: "/#",
-            click: function (e: any) {
-                e.preventDefault();
-                setIsOrder(!isOrder);
-                setIscurrentState('Orders');
-                updateIconSidebar(e);
-            },
-            stateVariables: isOrder,
-            subItems: [
-                {
-                    id: "listview",
-                    label: "List View",
-                    link: "/orders-list-view",
-                    parentId: "orders",
-                },
-                {
-                    id: "overview",
-                    label: "Overview",
-                    link: "/orders-overview",
-                    parentId: "orders",
-                },
-            ],
-        },
+        // {
+        //     id: "orders",
+        //     label: "Stocks",
+        //     icon: "bi bi-cart4",
+        //     link: "/#",
+        //     click: function (e: any) {
+        //         e.preventDefault();
+        //         setIsOrder(!isOrder);
+        //         setIscurrentState('Orders');
+        //         updateIconSidebar(e);
+        //     },
+        //     stateVariables: isOrder,
+        //     subItems: [
+        //         {
+        //             id: "listview",
+        //             label: "List View",
+        //             link: "/orders-list-view",
+        //             parentId: "orders",
+        //         },
+        //         {
+        //             id: "overview",
+        //             label: "Overview",
+        //             link: "/orders-overview",
+        //             parentId: "orders",
+        //         },
+        //     ],
+        // },
         {
             id: "seller",
-            label: "Clients physiques",
+            label: "Fournisseur",
             icon: "bi bi-binoculars",
-            link: "/#",
-            click: function (e: any) {
-                e.preventDefault();
-                setIsSellers(!isSellers);
-                setIscurrentState('Sellers');
-                updateIconSidebar(e);
-            },
-            stateVariables: isSellers,
-            subItems: [
-                {
-                    id: "listview",
-                    label: "Liste des clients",
-                    link: "/sellers-list-view",
-                    parentId: "seller",
-                },
-                {
-                    id: "gridview",
-                    label: "Grid View",
-                    link: "/seller-grid-view",
-                    parentId: "seller",
-                },
-                {
-                    id: "overview",
-                    label: "Overview",
-                    link: "/seller-overview",
-                    parentId: "seller",
-                },
-            ],
+            link: "/seller-grid-view",
         },
         {
             id: "userslist",
@@ -186,7 +159,7 @@ const Navdata = () => {
         },
         {
             id: "coupons",
-            label: "Fournisseur",
+            label: "Client physique",
             icon: "bi bi-tag",
             link: "/coupons",
         },

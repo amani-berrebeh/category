@@ -24,7 +24,7 @@ export const produitSlice = createApi({
         return{
             fetchProduits: builder.query<Produit[], number|void>({
                 query() {
-                    return `/getAllProducts`;
+                    return `/getAll`;
                 },
                 providesTags: ['Produit']
             }),

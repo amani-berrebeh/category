@@ -33,7 +33,7 @@ const CreateInvoice = () => {
         <React.Fragment>
             <div className="page-content">
                 <Container fluid={true}>
-                    <Breadcrumb title="Create Invoice" pageTitle="Invoices" />
+                    <Breadcrumb title="Créer Facture" pageTitle="Factures" />
 
                     <Row className="justify-content-center">
                         <Col xxl={9}>
@@ -53,16 +53,16 @@ const CreateInvoice = () => {
                                                 </div>
                                                 <div>
                                                     <div>
-                                                        <Form.Label htmlFor="companyAddress" className="form-label">Address</Form.Label>
+                                                        <Form.Label htmlFor="companyAddress" className="form-label">Adresse</Form.Label>
                                                     </div>
                                                     <div className="mb-2">
-                                                        <textarea className="form-control" id="companyAddress" placeholder="Company Address" defaultValue="" />
+                                                        <textarea className="form-control" id="companyAddress" placeholder="Taper votre adresse" defaultValue="" />
                                                         <div className="invalid-feedback">
-                                                            Please enter a address
+                                                            Adresse
                                                         </div>
                                                     </div>
                                                     <div className="mb-2 mb-lg-0">
-                                                        <Form.Control type="text" id="companyaddpostalcode" placeholder="Enter Postal Code" required />
+                                                        <Form.Control type="text" id="companyaddpostalcode" placeholder="Code Postal" required />
                                                         <div className="invalid-feedback">
                                                             The US zip code must contain 5 digits, Ex. 45678
                                                         </div>
@@ -71,25 +71,25 @@ const CreateInvoice = () => {
                                             </Col>
                                             <Col lg={4} className="ms-auto">
                                                 <div className="mb-2">
-                                                    <Form.Control type="text" id="registrationNumber" placeholder="Legal Registration No" required />
+                                                    <Form.Control type="text" id="registrationNumber" placeholder="Matricule fiscale" required />
                                                     <div className="invalid-feedback">
                                                         Please enter a registration no, Ex., 012345678912
                                                     </div>
                                                 </div>
                                                 <div className="mb-2">
-                                                    <Form.Control type="email" id="companyEmail" placeholder="Email Address" required />
+                                                    <Form.Control type="email" id="companyEmail" placeholder="Adresse e-mail" required />
                                                     <div className="invalid-feedback">
                                                         Please enter a valid email, Ex., example@gamil.com
                                                     </div>
                                                 </div>
-                                                <div className="mb-2">
+                                                {/* <div className="mb-2">
                                                     <Form.Control type="text" id="companyWebsite" placeholder="Website" required />
                                                     <div className="invalid-feedback">
                                                         Please enter a website, Ex., www.example.com
                                                     </div>
-                                                </div>
+                                                </div> */}
                                                 <div>
-                                                    <Form.Control type="number" data-plugin="cleave-phone" id="compnayContactno" placeholder="Contact No" required />
+                                                    <Form.Control type="number" data-plugin="cleave-phone" id="compnayContactno" placeholder="Contact" required />
                                                     <div className="invalid-feedback">
                                                         Please enter a contact number
                                                     </div>
@@ -100,15 +100,15 @@ const CreateInvoice = () => {
                                     <Card.Body className="p-4">
                                         <Row className="g-3">
                                             <Col lg={3} sm={6}>
-                                                <Form.Label htmlFor="invoicenoInput">Invoice No</Form.Label>
-                                                <Form.Control type="text" id="invoicenoInput" placeholder="Invoice No" defaultValue="#VL25000355" />
+                                                <Form.Label htmlFor="invoicenoInput">Numero Facture</Form.Label>
+                                                <Form.Control type="text" id="invoicenoInput" placeholder="Numero Facture" defaultValue="#VL25000355" />
                                             </Col>
                                             <Col lg={3} sm={6}>
                                                 <div>
                                                     <Form.Label htmlFor="date-field">Date</Form.Label>
                                                     <Flatpickr
                                                         className="form-control flatpickr-input"
-                                                        placeholder='Select Date-time'
+                                                        placeholder='Selectionner Date'
                                                         options={{
                                                             dateFormat: "d M, Y",
                                                         }}
@@ -116,18 +116,18 @@ const CreateInvoice = () => {
                                                 </div>
                                             </Col>
                                             <Col lg={3} sm={6}>
-                                                <Form.Label htmlFor="choices-payment-status">Payment Status</Form.Label>
+                                                <Form.Label htmlFor="choices-payment-status">Status de Payement</Form.Label>
                                                 <select className="form-select" data-choices data-choices-search-false id="choices-payment-status" required>
-                                                    <option value="">Select Payment Status</option>
-                                                    <option value="Paid">Paid</option>
-                                                    <option value="Unpaid">Unpaid</option>
-                                                    <option value="Refund">Refund</option>
+                                                    <option value="">Selectionner Status</option>
+                                                    <option value="Paid">Payé</option>
+                                                    <option value="Unpaid">Impayé</option>
+                                                    <option value="Refund">Rembourser</option>
                                                 </select>
                                             </Col>
                                             <Col lg={3} sm={6}>
                                                 <div>
-                                                    <Form.Label htmlFor="totalamountInput">Total Amount</Form.Label>
-                                                    <Form.Control type="number" id="totalamountInput" placeholder="$0.00" />
+                                                    <Form.Label htmlFor="totalamountInput">Montant Total</Form.Label>
+                                                    <Form.Control type="number" id="totalamountInput" placeholder="0.00" />
                                                 </div>
                                             </Col>
                                         </Row>
@@ -136,40 +136,40 @@ const CreateInvoice = () => {
                                         <Row>
                                             <Col lg={4} sm={6}>
                                                 <div>
-                                                    <Form.Label htmlFor="billingName" className="text-muted text-uppercase fw-semibold">Billing Address</Form.Label>
+                                                    <Form.Label htmlFor="billingName" className="text-muted text-uppercase fw-semibold"> Adresse de Facturation</Form.Label>
                                                 </div>
                                                 <div className="mb-2">
-                                                    <Form.Control type="text" id="billingName" placeholder="Full Name" required />
+                                                    <Form.Control type="text" id="billingName" placeholder="Nom complet" required />
                                                     <div className="invalid-feedback">
-                                                        Please enter a full name
+                                                        Taper le nom
                                                     </div>
                                                 </div>
                                                 <div className="mb-2">
-                                                    <textarea className="form-control" id="billingAddress" placeholder="Address" defaultValue="" />
+                                                    <textarea className="form-control" id="billingAddress" placeholder="Adresse" defaultValue="" />
                                                     <div className="invalid-feedback">
                                                         Please enter a address
                                                     </div>
                                                 </div>
                                                 <div className="mb-2">
-                                                    <Form.Control type="number" data-plugin="cleave-phone" id="billingPhoneno" placeholder="(123)456-7890" required />
+                                                    <Form.Control type="number" data-plugin="cleave-phone" id="Contact de facuration" placeholder="50 555 333" required />
                                                     <div className="invalid-feedback">
                                                         Please enter a phone number
                                                     </div>
                                                 </div>
                                                 <div className="mb-3">
-                                                    <Form.Control type="text" id="billingTaxno" placeholder="Tax Number" required />
+                                                    <Form.Control type="text" id="billingTaxno" placeholder="Taxe " required />
                                                     <div className="invalid-feedback">
                                                         Please enter a tax number
                                                     </div>
                                                 </div>
-                                                <div className="form-check">
+                                                {/* <div className="form-check">
                                                     <Form.Check type="checkbox" id="same" name="same" />
                                                     <Form.Label className="form-check-label" htmlFor="same">
                                                         Will your Billing and Shipping address same?
                                                     </Form.Label>
-                                                </div>
+                                                </div> */}
                                             </Col>
-                                            <Col sm={6} className="ms-auto">
+                                            {/* <Col sm={6} className="ms-auto">
                                                 <Row>
                                                     <Col lg={8}>
                                                         <div>
@@ -201,7 +201,7 @@ const CreateInvoice = () => {
                                                         </div>
                                                     </Col>
                                                 </Row>
-                                            </Col>
+                                            </Col> */}
                                         </Row>
                                     </Card.Body>
                                     <Card.Body className="p-4">
@@ -211,22 +211,22 @@ const CreateInvoice = () => {
                                                     <tr className="table-active">
                                                         <th scope="col" style={{ width: "50px" }}>#</th>
                                                         <th scope="col">
-                                                            Product Details
+                                                            Details Produit
                                                         </th>
                                                         <th scope="col" style={{ width: "120px" }}>
                                                             <div className="d-flex currency-select input-light align-items-center">
-                                                                Rate
-                                                                <Select
+                                                            Prix unitaire
+                                                                {/* <Select
                                                                     defaultValue={isCurrency}
                                                                     onChange={handleisCurrency}
                                                                     options={allcurrency}
                                                                     id="choices-payment-currency"
                                                                     className="form-selectborder-0 bg-light"
-                                                                />
+                                                                /> */}
                                                             </div>
                                                         </th>
-                                                        <th scope="col" style={{ width: "120px" }}>Quantity</th>
-                                                        <th scope="col" className="text-end" style={{ width: "180px" }}>Amount</th>
+                                                        <th scope="col" style={{ width: "120px" }}>Quantité</th>
+                                                        <th scope="col" className="text-end" style={{ width: "180px" }}>Montant</th>
                                                         <th scope="col" className="text-end" style={{ width: "105px" }}></th>
                                                     </tr>
                                                 </thead>
@@ -235,12 +235,12 @@ const CreateInvoice = () => {
                                                         <th scope="row" className="product-id">1</th>
                                                         <td className="text-start">
                                                             <div className="mb-2">
-                                                                <Form.Control type="text" id="productName-1" placeholder="Product Name" required />
+                                                                <Form.Control type="text" id="productName-1" placeholder="Nom Produit" required />
                                                                 <div className="invalid-feedback">
                                                                     Please enter a product name
                                                                 </div>
                                                             </div>
-                                                            <textarea className="form-control" id="productDetails-1" placeholder="Product Details" defaultValue="" />
+                                                            <textarea className="form-control" id="productDetails-1" placeholder="Détails Produit" defaultValue="" />
                                                         </td>
                                                         <td>
                                                             <Form.Control type="number" className="product-price" id="productRate-1" step="0.01" placeholder="0.00" required />
@@ -261,7 +261,7 @@ const CreateInvoice = () => {
                                                             </div>
                                                         </td>
                                                         <td className="product-removal">
-                                                            <Link to="#" className="btn btn-danger">Delete</Link>
+                                                            <Link to="#" className="btn btn-danger">Supprimer</Link>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -269,7 +269,7 @@ const CreateInvoice = () => {
                                                     <tr id="newForm" style={{ display: "none" }}><td className="d-none"><p>Add New Form</p></td></tr>
                                                     <tr>
                                                         <td>
-                                                            <Link to="#" id="add-item" className="btn btn-soft-secondary fw-medium"><i className="ri-add-fill me-1 align-bottom"></i> Add Item</Link>
+                                                            <Link to="#" id="add-item" className="btn btn-soft-secondary fw-medium"><i className="ri-add-fill me-1 align-bottom"></i> Ajouter élement</Link>
                                                         </td>
                                                     </tr>
                                                     <tr className="border-top border-top-dashed mt-2">
@@ -278,33 +278,33 @@ const CreateInvoice = () => {
                                                             <Table className="table-borderless table-sm table-nowrap align-middle mb-0">
                                                                 <tbody>
                                                                     <tr>
-                                                                        <th scope="row">Sub Total</th>
+                                                                        <th scope="row">Total</th>
                                                                         <td style={{ width: "150px" }}>
-                                                                            <Form.Control type="number" id="cart-subtotal" placeholder="$0.00" />
+                                                                            <Form.Control type="number" id="cart-subtotal" placeholder="0.00" />
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <th scope="row">Estimated Tax (12.5%)</th>
+                                                                        <th scope="row">Taxe (19%)</th>
                                                                         <td>
                                                                             <Form.Control type="number" id="cart-tax" placeholder="$0.00" />
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <th scope="row">Discount <small className="text-muted">(VELZON15)</small></th>
+                                                                        <th scope="row">Reduction </th>
                                                                         <td>
                                                                             <Form.Control type="number" id="cart-discount" placeholder="$0.00" />
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <th scope="row">Shipping Charge</th>
+                                                                        <th scope="row">Charge Transport</th>
                                                                         <td>
                                                                             <Form.Control type="number" id="cart-shipping" placeholder="$0.00" />
                                                                         </td>
                                                                     </tr>
                                                                     <tr className="border-top border-top-dashed">
-                                                                        <th scope="row">Total Amount</th>
+                                                                        <th scope="row">Montant Total</th>
                                                                         <td>
-                                                                            <Form.Control type="number" id="cart-total" placeholder="$0.00" />
+                                                                            <Form.Control type="number" id="cart-total" placeholder="0.00" />
                                                                         </td>
                                                                     </tr>
                                                                 </tbody>
@@ -319,32 +319,32 @@ const CreateInvoice = () => {
                                                 <div className="mb-2">
                                                     <Form.Label htmlFor="choices-payment-type" className="text-muted text-uppercase fw-semibold">Payment Details</Form.Label>
                                                     <select className="form-select" data-choices data-choices-search-false id="choices-payment-type">
-                                                        <option value="">Payment Method</option>
-                                                        <option value="Mastercard">Mastercard</option>
-                                                        <option value="Credit Card">Credit Card</option>
+                                                        <option value="">Methode de Payement</option>
+                                                        <option value="Mastercard">Espèce</option>
+                                                        <option value="Credit Card">par chèque</option>
                                                         <option value="Visa">Visa</option>
-                                                        <option value="Paypal">Paypal</option>
+                                                        
                                                     </select>
                                                 </div>
-                                                <div className="mb-2">
+                                                {/* <div className="mb-2">
                                                     <Form.Control type="text" id="cardholderName" placeholder="Card Holder Name" />
-                                                </div>
-                                                <div className="mb-2">
+                                                </div> */}
+                                                {/* <div className="mb-2">
                                                     <Form.Control type="number" id="cardNumber" placeholder="xxxx xxxx xxxx xxxx" />
-                                                </div>
+                                                </div> */}
                                                 <div>
-                                                    <Form.Control type="number" id="amountTotalPay" placeholder="$0.00" />
+                                                    <Form.Control type="number" id="amountTotalPay" placeholder="0.00" />
                                                 </div>
                                             </Col>
                                         </Row>
                                         <div className="mt-4">
                                             <Form.Label htmlFor="exampleFormControlTextarea1" className="text-muted text-uppercase fw-semibold">NOTES</Form.Label>
-                                            <textarea className="form-control alert alert-warning" id="exampleFormControlTextarea1" placeholder="Notes" defaultValue="All accounts are to be paid within 7 days from receipt of invoice. To be paid by cheque or credit card or direct payment online. If account is not paid within 7 days the credits details supplied as confirmation of work undertaken will be charged the agreed quoted fee noted above." />
+                                            <textarea className="form-control alert alert-warning" id="exampleFormControlTextarea1" placeholder="Notes" defaultValue="Tous les comptes doivent être payés dans les 7 jours suivant la réception de la facture. A régler par chèque ou carte bancaire ou paiement direct en ligne." />
                                         </div>
                                         <div className="hstack gap-2 justify-content-end d-print-none mt-4">
-                                            <Button variant='success' type="submit"><i className="ri-printer-line align-bottom me-1"></i> Save</Button>
-                                            <Link to="#" className="btn btn-primary"><i className="ri-download-2-line align-bottom me-1"></i> Download Invoice</Link>
-                                            <Link to="#" className="btn btn-danger"><i className="ri-send-plane-fill align-bottom me-1"></i> Send Invoice</Link>
+                                            <Button variant='success' type="submit"><i className="ri-printer-line align-bottom me-1"></i> Enregister</Button>
+                                            <Link to="#" className="btn btn-primary"><i className="ri-download-2-line align-bottom me-1"></i> Telecharger Facture</Link>
+                                            {/* <Link to="#" className="btn btn-danger"><i className="ri-send-plane-fill align-bottom me-1"></i> Send Invoice</Link> */}
                                         </div>
                                     </Card.Body>
                                 </Form>

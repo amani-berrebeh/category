@@ -60,7 +60,7 @@ const InvoiceListTable = () => {
                 filterable: true,
             },
             {
-                Header: "User Name",
+                Header: "Designation",
                 disableFilters: true,
                 filterable: true,
                 accessor: (cellProps: any) => {
@@ -72,41 +72,41 @@ const InvoiceListTable = () => {
                     </div>)
                 }
             },
+            // {
+            //     Header: "Email",
+            //     accessor: "email",
+            //     disableFilters: true,
+            //     filterable: true,
+            // },
             {
-                Header: "Email",
-                accessor: "email",
-                disableFilters: true,
-                filterable: true,
-            },
-            {
-                Header: "Country",
+                Header: "Adresse",
                 accessor: "country",
                 disableFilters: true,
                 filterable: true,
             },
             {
-                Header: "Date",
+                Header: "Date Facture",
                 accessor: "date",
                 disableFilters: true,
                 filterable: true,
             },
             {
-                Header: "Amount",
+                Header: "Montant",
                 accessor: "amt",
                 disableFilters: true,
                 filterable: true,
             },
             {
-                Header: "Payment Status",
+                Header: "Status",
                 disableFilters: true,
                 filterable: true,
                 accessor: (cellProps: any) => {
                     switch (cellProps.paystatus) {
-                        case "Paid":
+                        case "Payé":
                             return (<span className="badge badge-soft-success">{cellProps.paystatus}</span>)
-                        case "Unpaid":
+                        case "Impayé":
                             return (<span className="badge badge-soft-warning">{cellProps.paystatus}</span>)
-                        case "Refund":
+                        case "Rembourser":
                             return (<span className="badge badge-soft-primary">{cellProps.paystatus}</span>)
                         default:
                             return (<span className="badge badge-soft-danger">{cellProps.paystatus}</span>)
@@ -127,12 +127,12 @@ const InvoiceListTable = () => {
                                 <Dropdown.Menu as="ul" className="dropdown-menu-end">
                                     <li>
                                         <Dropdown.Item href="/invoices-details">
-                                            <i className="ri-eye-fill align-bottom me-2 text-muted" /> View
+                                            <i className="ri-eye-fill align-bottom me-2 text-muted" /> Voir
                                         </Dropdown.Item>
                                     </li>
                                     <li>
                                         <Dropdown.Item href="#" className="remove-list">
-                                            <i className="ri-pencil-fill align-bottom me-2 text-muted" />Edit
+                                            <i className="ri-pencil-fill align-bottom me-2 text-muted" />Modifier
                                         </Dropdown.Item>
                                     </li>
                                     <li>
@@ -143,7 +143,7 @@ const InvoiceListTable = () => {
                                     <Dropdown.Divider />
                                     <li>
                                         <Dropdown.Item href="#" className="remove-list">
-                                            <i className="ri-delete-bin-fill align-bottom me-2 text-muted" />Delete
+                                            <i className="ri-delete-bin-fill align-bottom me-2 text-muted" />Supprimer
                                         </Dropdown.Item>
                                     </li>
                                 </Dropdown.Menu>
@@ -163,11 +163,11 @@ const InvoiceListTable = () => {
                     <Card id="invoiceList">
                         <Card.Header className="border-0">
                             <div className="d-flex align-items-center">
-                                <h5 className="card-title mb-0 flex-grow-1">Invoices</h5>
+                                <h5 className="card-title mb-0 flex-grow-1">Factures</h5>
                                 <div className="flex-shrink-0">
                                     <div className="d-flex gap-2 flex-wrap">
                                         {isMultiDeleteButton && <Button variant="danger" className="btn-icon"><i className="ri-delete-bin-2-line"></i></Button>}
-                                        <Link to="/invoices-create" className="btn btn-primary" onClick={tog_AddUserModals}><i className="ri-add-line align-bottom me-1"></i> Create Invoice</Link>
+                                        <Link to="/invoices-create" className="btn btn-primary" onClick={tog_AddUserModals}><i className="ri-add-line align-bottom me-1"></i> Créer Facture</Link>
                                     </div>
                                 </div>
                             </div>
@@ -177,7 +177,7 @@ const InvoiceListTable = () => {
                                 <Row className="g-3">
                                     <Col xxl={5} sm={12}>
                                         <div className="search-box">
-                                            <input type="text" className="form-control search bg-light border-light" placeholder="Search for customer, email, country, status or something..." />
+                                            <input type="text" className="form-control search bg-light border-light" placeholder="rechercher facture par date, client, status..." />
                                             <i className="ri-search-line search-icon"></i>
                                         </div>
                                     </Col>
@@ -186,7 +186,7 @@ const InvoiceListTable = () => {
                                         {/* <input type="text" className="form-control bg-light border-light" id="datepicker-range" placeholder="Select date" /> */}
                                         <Flatpickr
                                             className="form-control bg-light border-light"
-                                            placeholder='Select Date'
+                                            placeholder='Selectionner Date'
                                             options={{
                                                 mode: "range",
                                                 dateFormat: "d M, Y",

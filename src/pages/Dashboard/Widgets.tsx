@@ -6,9 +6,6 @@ interface WidgetsProps {
     id : number;
     name : string;
     amount : number;
-    decimal ?: number;
-    perstange : string;
-    badgeColor : string;
     icon : string;
     iconColor : string;
 }
@@ -17,38 +14,29 @@ const Widgets = () => {
     const widgetsData : Array<WidgetsProps> = [
         {
             id : 1,
-            name : "TOTAL EARNINGS",
+            name : "TOTAL VENTE",
             amount : 98851.35,
-            decimal : 2,
-            perstange : "+18.30",
-            badgeColor : "success",
             icon : "ph-wallet",
             iconColor : "secondary"
         },
         {
             id : 2,
-            name : "ORDERS",
+            name : "TOTAL ACHAT",
             amount : 65802,
-            perstange : "-2.74",
-            badgeColor : "danger",
             icon : "ph-storefront",
             iconColor : "info"
         },
         {
             id : 3,
-            name : "CUSTOMERS",
+            name : "TOTAL Impayés",
             amount : 79958,
-            perstange : "+29.08",
-            badgeColor : "success",
             icon : "ph-user-circle",
             iconColor : "warning"
         },
         {
             id : 4,
-            name : "PRODUCTS",
+            name : "TOTAL CHARGE",
             amount : 36758,
-            perstange : "+1.67",
-            badgeColor : "success",
             icon : "ph-sketch-logo",
             iconColor : "primary"
         },
@@ -70,7 +58,7 @@ const Widgets = () => {
                                     <h5 className={"badge badge-soft-" + item.badgeColor + " mb-0"}>
                                         <i className={item.badgeColor === "success" ? "ri-arrow-right-up-line align-bottom" : "ri-arrow-right-down-line align-bottom"}></i> {item.perstange} %
                                     </h5>
-                                    <p className="text-muted mb-0">than last week</p>
+                                    {/* <p className="text-muted mb-0">than last week</p> */}
                                 </div>
                             </div>
                             <div className="avatar-sm flex-shrink-0">

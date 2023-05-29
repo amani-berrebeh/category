@@ -1,11 +1,108 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { productList } from 'Common/data';
 import TableContainer from 'Common/TableContainer';
 import { Col, Dropdown, Form, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 import moment from 'moment';
+import { useAddProduitMutation, useDeleteProduitMutation, useFetchProduitsQuery, Produit } from 'features/produit/productSlice';
 
 const ProductTable = () => {
+  const {data = []} = useFetchProduitsQuery()
+  console.log(data)
+  const [createProduct] = useAddProduitMutation()
+  const [deleteProduct] = useDeleteProduitMutation()
+  const deleteHandler = async (id: any) => {
+    await deleteProduct(id);
+  };
+  const notify = () => {
+    toast.success("Le Product a été créé avec succès", {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
+  const [formData, setFormData] = useState({
+    idproduit: 99,
+    nomProduit: "",
+    imageProduit:  "",
+    marque: "",
+    prixAchatHt: 11,
+    prixAchatTtc: 22,
+    prixVente: 33,
+    remise: 0.12 ,
+    remarqueProduit: "",
+    nom: "",
+    raison_sociale: ""
+  });
+
+  const {
+    idproduit,
+    nomProduit,
+    imageProduit,
+    marque,
+    prixAchatHt,
+    prixAchatTtc,
+    prixVente,
+    remise ,
+    remarqueProduit,
+    nom,
+    raison_sociale
+  } = formData;
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.id]: e.target.value,
+    }));
+  };
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    createProduct(formData).then(() => setFormData(formData));
+    notify();
+  };
+
+  const handleFileUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const fileLogo = (
+      document.getElementById("imageProduit") as HTMLInputElement
+    ).files?.item(0) as File;
+
+    const base64 = await convertToBase64(fileLogo);
+    
+    
+
+    setFormData({
+      ...formData,
+      imageProduit: base64 as string,
+    });
+  };
+
+  function convertToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        const base64String = fileReader.result as string;
+        const base64Data = base64String.split(",")[1];
+
+        resolve(base64Data);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  }
 
   const handleValidDate = (date: any) => {
     const date1 = moment(new Date(date)).format("DD MMM Y");
@@ -29,80 +126,32 @@ const ProductTable = () => {
 
   const columns = useMemo(() => [
     {
-      Header: "#",
-      Cell: (cell: any) => {
-        return <input type="checkbox" className="productCheckBox form-check-input" value={cell.row.original._id} />;
-      },
-    },
-    {
-      Header: "Product name",
-      Cell: (product: any) => (
-        <>
-          <div className="d-flex align-items-center">
-            <div className="flex-shrink-0 me-3">
-              <div className="avatar-sm bg-light rounded p-1">
-                <img
-                  src={product.row.original.productImg}
-                  alt=""
-                  className="img-fluid d-block"
-                />
-              </div>
-            </div>
-            <div className="flex-grow-1">
-              <h5 className="fs-14 mb-1">
-                <Link
-                  to="/apps-ecommerce-product-details"
-                  className="d-block text-reset"
-                >
-                  {" "}
-                  {product.row.original.productTitle}
-                </Link>
-              </h5>
-              <p className="text-muted mb-0">
-                Category :{" "}
-                <span className="fw-medium">
-                  {" "}
-                  {product.row.original.category}
-                </span>
-              </p>
-            </div>
-          </div>
-        </>
-      ),
-    },
-    {
-      Header: "Stock",
-      accessor: "stock",
+      Header: "Nom",
+      accessor: "nomProduit",
       Filter: false,
     },
     {
-      Header: "Rate",
+      Header: "Categorie",
+      accessor: "nom",
       Filter: false,
-      accessor: (cellProps: any) => {
-        return (
-          <span>
-            <span className="badge bg-light text-body fs-12 fw-medium"><i className="mdi mdi-star text-warning me-1"></i>{cellProps.rating}</span>
-          </span>
-        )
-      }
     },
+    
     {
-      Header: "Price",
-      accessor: "price",
+      Header: "prixAchatHt",
+      accessor: "prixAchatHt",
       Filter: false
     },
     {
-      Header: "Orders",
-      accessor: "orders",
+      Header: "prixAchatTtc",
+      accessor: "prixAchatTtc",
       Filter: false,
     },
     {
-      Header: "Publish",
+      Header: "prixVente",
+      accessor: "prixVente",
       Filter: false,
-      accessor: (cellProps: any) => {
-        return (<span>{handleValidDate(cellProps.publish)}<small className="text-muted ms-1">{handleValidTime(cellProps.publish)}</small></span>)
-      }
     },
+   
     {
       Header: "Action",
       Cell: (cellProps: any) => {
@@ -152,7 +201,7 @@ const ProductTable = () => {
       <div>
         <TableContainer
           columns={columns}
-          data={(productList || [])}
+          data={(data || [])}
           // isGlobalFilter={true}
           isAddUserList={false}
           customPageSize={10}

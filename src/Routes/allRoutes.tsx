@@ -83,8 +83,8 @@ const authProtectedRoutes = [
     { path: "/sub-categories", component: <SubCategories /> },
 
     // Orders
-    { path: "/orders-list-view", component: <OrdersListView /> },
-    { path: "/orders-overview", component: <OrdersOverview /> },
+    // { path: "/orders-list-view", component: <OrdersListView /> },
+    // { path: "/orders-overview", component: <OrdersOverview /> },
 
     // Sellers
     { path: "/sellers-list-view", component: <SellersListView /> },
@@ -112,7 +112,7 @@ const authProtectedRoutes = [
     { path: "/reviews-ratings", component: <ReviewRating /> },
 
     //Review & Rating
-    { path: "/brands", component: <Brands /> },
+    { path: "/charges", component: <Brands /> },
 
     //statistics
     { path: "/statistics", component: <Statistics /> },

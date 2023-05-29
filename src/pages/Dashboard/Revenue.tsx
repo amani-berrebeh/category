@@ -43,8 +43,8 @@ const Revenue = () => {
             <Col xxl={9} className="order-last">
                 <Card>
                     <Card.Header className="align-items-center d-flex">
-                        <h4 className="card-title mb-0 flex-grow-1">Revenue</h4>
-                        <div>
+                        <h4 className="card-title mb-0 flex-grow-1">Liste des Notes</h4>
+                        {/* <div>
                             <Button variant='soft-secondary' size="sm" className={activeChart === "all" ? "me-1 active" : "me-1"} onClick={() => onChangeChartPeriod("all")}>
                                 ALL
                             </Button>
@@ -57,9 +57,9 @@ const Revenue = () => {
                             <Button variant='soft-primary' size="sm" className={activeChart === "yearly" ? "active" : ""} onClick={() => onChangeChartPeriod("yearly")}>
                                 1Y
                             </Button>
-                        </div>
+                        </div> */}
                     </Card.Header>
-                    <Card.Body>
+                    {/* <Card.Body>
                         <Row>
                             <Col xxl={8}>
                                 <RevenueCharts chartData={chartData} dataColors='["--tb-secondary", "--tb-danger", "--tb-success"]' />
@@ -138,7 +138,7 @@ const Revenue = () => {
                                 </Card>
                             </Col>
                         </Row>
-                    </Card.Body>
+                    </Card.Body> */}
                 </Card>
                 <Card className="overflow-hidden">
                     <div className="position-absolute opacity-50 start-0 end-0 top-0 bottom-0"
@@ -146,16 +146,16 @@ const Revenue = () => {
                     ></div>
                     <Card.Body className="d-flex justify-content-between align-items-center z-1">
                         <div className="d-flex align-items-center gap-3">
-                            <div className="flex-shrink-0">
+                            {/* <div className="flex-shrink-0">
                                 <i className="ph-storefront display-6"></i>
-                            </div>
-                            <div className="flex-grow-1">
+                            </div> */}
+                            {/* <div className="flex-grow-1">
                                 <h5 className="card-title fw-medium fs-17 mb-1">Have you tried new <b>Toner eCommerce Templates</b> ?</h5>
                                 <p className="mb-0">That allows customers to browse and purchase items from an online store.</p>
-                            </div>
+                            </div> */}
                         </div>
                         <div>
-                            <Link to="/product-create" className="btn btn-success btn-label btn-hover rounded-pill"><i className="bi bi-box-seam label-icon align-middle rounded-pill fs-16 me-2"></i> Add New Product</Link>
+                            <Link to="/product-create" className="btn btn-success align-items-center btn-label btn-hover rounded-pill"><i className="bi bi-box-seam label-icon align-middle rounded-pill fs-16 me-2"></i> Ajouter Nouveau Produit</Link>
                         </div>
                     </Card.Body>
                 </Card>

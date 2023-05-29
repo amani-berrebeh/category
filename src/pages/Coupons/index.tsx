@@ -1,198 +1,517 @@
-import React, { useState, useMemo } from 'react';
-import { Button, Card, Col, Container, Form, Modal, Offcanvas, Row } from 'react-bootstrap';
-import Breadcrumb from 'Common/BreadCrumb';
+import React, { useState, useMemo } from "react";
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  Form,
+  Modal,
+  Offcanvas,
+  Row,
+} from "react-bootstrap";
+import Breadcrumb from "Common/BreadCrumb";
 import TableContainer from "Common/TableContainer";
 import { couponsList } from "Common/data";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import Flatpickr from "react-flatpickr";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 
 import offerbanner from "../../assets/images/ecommerce/offer-banner.jpg";
-import { useDeleteFournisseurMutation, useFetchFournisseurQuery } from 'features/fournisseur/fournisseurSlice';
-import { Fournisseur } from './../../features/fournisseur/fournisseurSlice';
 
-
+import {
+  useFetchClientPhysiquesQuery,
+  useDeleteClientPhysiqueMutation,
+  useAddClientPhysiqueMutation,
+  ClientPhysique,
+} from "features/clientPhysique/clientPhysiqueSlice";
 
 const Coupons = () => {
+  const { data = [] } = useFetchClientPhysiquesQuery();
+  const [deleteClientPhysique] = useDeleteClientPhysiqueMutation();
+  const [createClientPhysique] = useAddClientPhysiqueMutation();
 
-const  { data =[] } = useFetchFournisseurQuery();
-const [deleteFournisseur] = useDeleteFournisseurMutation();
+  const deleteHandler = async (id: any) => {
+    await deleteClientPhysique(id);
+  };
 
-const deleteHandler = async (id: any) => {
-  await deleteFournisseur(id);
-};
+  const notify = () => {
+    toast.success("Le Client Physique a été créé avec succès", {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
 
+  const etatActive = data.filter((fournisseur) => fournisseur.etat === 1);
+  const etatNonActive = data.filter((fournisseur) => fournisseur.etat === 0);
 
-    document.title = "Coupons | Toner eCommerce + Admin React Template";
+  const [formData, setFormData] = useState({
+    idclient_p: 99,
+    raison_sociale: "",
+    adresse: "",
+    tel: 14785236,
+    mail: "",
+    cin: 1234,
+    avatar: "",
+    rib: 1142250,
+    etat: 1,
+    remarque: "",
+    credit: 123,
+    piecejointes: "",
+  });
 
-    const [showCoupons, setShowCoupons] = useState<boolean>(false);
-    const [showCouponDetails, setShowCouponsDetails] = useState<any>({});
+  const {
+    raison_sociale,
+    adresse,
+    tel,
+    mail,
+    cin,
+    avatar,
+    rib,
+    etat,
+    remarque,
+    credit,
+    piecejointes,
+  } = formData;
 
-    const columns = useMemo(
-        () => [
-            {
-                Header: "IdFournisseur",
-                disableFilters: true,
-                filterable: true,
-                accessor: "idfournisseur"
-            },
-            {
-                Header: "raison sociale",
-                accessor: "raison_sociale",
-                disableFilters: true,
-                filterable: true,
-            },
-            {
-                Header: "Adresse",
-                accessor: "adresse",
-                disableFilters: true,
-                filterable: true,
-            },
-            {
-                Header: "Telephone",
-                accessor: "tel",
-                disableFilters: true,
-                filterable: true,
-            },
-            {
-                Header: "E-mail",
-                accessor: "mail",
-                disableFilters: true,
-                filterable: true,
-            },
-            {
-                Header: "Matricule fiscale",
-                accessor: "matricule_fiscale",
-                disableFilters: true,
-                filterable: true,
-            },
-            {
-                Header: "RIB",
-                accessor: "rib",
-                disableFilters: true,
-                filterable: true,
-            },
-            {
-                Header: "Etat",
-                disableFilters: true,
-                filterable: true,
-                accessor: (fournisseur:Fournisseur) => {
-                    switch (fournisseur.etat) {
-                        case 0:
-                            return (<span className="badge badge-soft-success text-uppercase"> inactif</span>)
-                        case 1:
-                            return (<span className="badge badge-soft-danger text-uppercase"> actif</span>)
-                        default:
-                            return (<span className="badge badge-soft-success text-uppercase"> inactif</span>)
-                    }
-                },
-            },
-            {
-                Header: "Action",
-                disableFilters: true,
-                filterable: true,
-                accessor: (fournisseur:Fournisseur) => {
-                    return (
-                        <ul className="hstack gap-2 list-unstyled mb-0">
-                            <li>
-                                <Link to="#couponDetails" data-bs-toggle="offcanvas" className="badge badge-soft-dark view-item-btn" onClick={() => { setShowCouponsDetails(fournisseur); setShowCoupons(!showCoupons) }}>View</Link>
-                            </li>
-                            <li>
-                                <Link to="#showModal" className="badge badge-soft-primary edit-item-btn" data-bs-toggle="modal">Edit</Link>
-                            </li>
-                            <li>
-                                <Link to="#deleteModal" onClick={()=>deleteHandler(fournisseur.idfournisseur)} data-bs-toggle="modal" className="badge badge-soft-danger remove-item-btn">Delete</Link>
-                            </li>
-                        </ul>
-                    )
-                },
-            },
-        ],[showCoupons]
-    );
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.id]: e.target.value,
+    }));
+  };
 
-    const [modal_AddCouponsModals, setmodal_AddCouponsModals] = useState<boolean>(false);
-    function tog_AddCouponsModals() {
-        setmodal_AddCouponsModals(!modal_AddCouponsModals);
-    }
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    createClientPhysique(formData).then(() => setFormData(formData));
+    notify();
+  };
 
-    return (
-        <React.Fragment>
-            <div className="page-content">
-                <Container fluid={true}>
-                    <Breadcrumb title="Coupons" pageTitle="Toner" />
-                    <div id="couponsList">
-                        <Row>
-                            <Col xxl={12}>
-                                <Card>
-                                    <Card.Body>
-                                        <Row className="align-items-center">
-                                            <Col xxl={3} md={5}>
-                                                <div className="search-box mb-3 mb-md-0">
-                                                    <input type="text" className="form-control search" id="searchProductList" placeholder="Search by coupons code & name..." />
-                                                    <i className="ri-search-line search-icon"></i>
-                                                </div>
-                                            </Col>
-                                            <Col className="col-md-auto ms-auto">
-                                                <Button variant='success' onClick={() => tog_AddCouponsModals()} className="add-btn"><i className="bi bi-plus-circle me-1 align-middle"></i>Add Coupon</Button>
-                                            </Col>
-                                        </Row>
-                                    </Card.Body>
-                                </Card>
-                            </Col>
-                        </Row>
+  const handleFileUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const fileLogo = (
+      document.getElementById("avatar") as HTMLInputElement
+    ).files?.item(0) as File;
+    const filePJ = (
+      document.getElementById("piecejointes") as HTMLInputElement
+    ).files?.item(0) as File;
 
-                        <Row>
-                            <Col lg={12}>
-                                <Card>
-                                    <Card.Body>
-                                        <div className="table-responsive table-card">
-                                            <TableContainer
-                                                columns={(columns || [])}
-                                                data={(data || [])}
-                                                // isGlobalFilter={false}
-                                                iscustomPageSize={false}
-                                                isBordered={false}
-                                                customPageSize={10}
-                                                className="custom-header-css table align-middle table-nowrap"
-                                                tableClassName="table-centered align-middle table-nowrap mb-0"
-                                                theadClassName="text-muted table-light"
-                                                SearchPlaceholder='Search Products...'
-                                            />
-                                            <div className="noresult" style={{ display: "none" }}>
-                                                <div className="text-center">
-                                                    {/* <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style="width:75px;height:75px"></lord-icon> */}
-                                                    <h5 className="mt-2">Sorry! No Result Found</h5>
-                                                    <p className="text-muted mb-0">We've searched more than 150+ Orders We did not find any orders for you search.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Card.Body>
-                                </Card>
-                            </Col>
-                        </Row>
+    const base64 = await convertToBase64(fileLogo);
+    const base64PJ = await convertToBase64(filePJ);
+    console.log(base64);
+
+    setFormData({
+      ...formData,
+      avatar: base64 as string,
+      piecejointes: base64PJ as string,
+    });
+  };
+
+  function convertToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        const base64String = fileReader.result as string;
+        const base64Data = base64String.split(",")[1];
+
+        resolve(base64Data);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  }
+
+  document.title = "Client Physique | Toner eCommerce + Admin React Template";
+
+  const [showCoupons, setShowCoupons] = useState<boolean>(false);
+  const [showCouponDetails, setShowCouponsDetails] = useState<any>({});
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: "ID",
+        disableFilters: true,
+        filterable: true,
+        accessor: "idclient_p",
+      },
+      {
+        Header: "avatar",
+        disableFilters: true,
+        filterable: true,
+        accessor: (clienphy: ClientPhysique) => {
+          return (
+            <div className="d-flex align-items-center gap-2">
+              <div className="flex-shrink-0">
+                <img
+                  src={`data:image/jpeg;base64, ${clienphy.avatar}`}
+                  alt=""
+                  className="avatar-xs rounded-circle user-profile-img"
+                />
+              </div>
+            </div>
+          );
+        },
+      },
+      {
+        Header: "raison sociale",
+        accessor: "raison_sociale",
+        disableFilters: true,
+        filterable: true,
+      },
+      {
+        Header: "Adresse",
+        accessor: "adresse",
+        disableFilters: true,
+        filterable: true,
+      },
+      {
+        Header: "Telephone",
+        accessor: "tel",
+        disableFilters: true,
+        filterable: true,
+      },
+      {
+        Header: "E-mail",
+        accessor: "mail",
+        disableFilters: true,
+        filterable: true,
+      },
+      {
+        Header: "cin ",
+        accessor: "cin",
+        disableFilters: true,
+        filterable: true,
+      },
+      {
+        Header: "RIB",
+        accessor: "rib",
+        disableFilters: true,
+        filterable: true,
+      },
+      {
+        Header: "Etat",
+        disableFilters: true,
+        filterable: true,
+        accessor: (clientPhy: ClientPhysique) => {
+          switch (clientPhy.etat) {
+            case 0:
+              return (
+                <span className="badge badge-soft-success text-uppercase">
+                  {" "}
+                  inactif
+                </span>
+              );
+            case 1:
+              return (
+                <span className="badge badge-soft-danger text-uppercase">
+                  {" "}
+                  actif
+                </span>
+              );
+            default:
+              return (
+                <span className="badge badge-soft-success text-uppercase">
+                  {" "}
+                  inactif
+                </span>
+              );
+          }
+        },
+      },
+      {
+        Header: "remarque",
+        accessor: "remarque",
+        disableFilters: true,
+        filterable: true,
+      },
+      {
+        Header: "credit",
+        accessor: "credit",
+        disableFilters: true,
+        filterable: true,
+      },
+      {
+        Header: "Action",
+        disableFilters: true,
+        filterable: true,
+        accessor: (clientPhy: ClientPhysique) => {
+          return (
+            <ul className="hstack gap-2 list-unstyled mb-0">
+              <li>
+                <Link
+                  to="#couponDetails"
+                  data-bs-toggle="offcanvas"
+                  className="badge badge-soft-dark view-item-btn"
+                  onClick={() => {
+                    setShowCouponsDetails(clientPhy);
+                    setShowCoupons(!showCoupons);
+                  }}
+                >
+                  View
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="#showModal"
+                  className="badge badge-soft-primary edit-item-btn"
+                  data-bs-toggle="modal"
+                >
+                  Edit
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/coupons"
+                  onClick={() => deleteHandler(clientPhy.idclient_p)}
+                  data-bs-toggle="modal"
+                  className="badge badge-soft-danger remove-item-btn"
+                >
+                  Delete
+                </Link>
+              </li>
+            </ul>
+          );
+        },
+      },
+    ],
+    [showCoupons]
+  );
+
+  const [modal_AddCouponsModals, setmodal_AddCouponsModals] =
+    useState<boolean>(false);
+  function tog_AddCouponsModals() {
+    setmodal_AddCouponsModals(!modal_AddCouponsModals);
+  }
+
+  return (
+    <React.Fragment>
+      <div className="page-content">
+        <Container fluid={true}>
+          <Breadcrumb title="Client Physique" pageTitle="Tableau de bord" />
+          <div id="couponsList">
+            <Row>
+              <Col xxl={12}>
+                <Card>
+                  <Card.Body>
+                    <Row className="align-items-center">
+                      <Col xxl={3} md={5}>
+                        <div className="search-box mb-3 mb-md-0">
+                          <input
+                            type="text"
+                            className="form-control search"
+                            id="searchProductList"
+                            placeholder="Search by coupons code & name..."
+                          />
+                          <i className="ri-search-line search-icon"></i>
+                        </div>
+                      </Col>
+                      <Col className="col-md-auto ms-auto">
+                        <Button
+                          variant="success"
+                          onClick={() => tog_AddCouponsModals()}
+                          className="add-btn"
+                        >
+                          <i className="bi bi-plus-circle me-1 align-middle"></i>
+                          Ajouter Client Physique
+                        </Button>
+                      </Col>
+                    </Row>
+                  </Card.Body>
+                </Card>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col lg={12}>
+                <Card>
+                  <Card.Body>
+                    <div className="table-responsive table-card">
+                      <TableContainer
+                        columns={columns || []}
+                        data={data || []}
+                        // isGlobalFilter={false}
+                        iscustomPageSize={false}
+                        isBordered={false}
+                        customPageSize={10}
+                        className="custom-header-css table align-middle table-nowrap"
+                        tableClassName="table-centered align-middle table-nowrap mb-0"
+                        theadClassName="text-muted table-light"
+                        SearchPlaceholder="Search Products..."
+                      />
+                      <div className="noresult" style={{ display: "none" }}>
+                        <div className="text-center">
+                          {/* <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style="width:75px;height:75px"></lord-icon> */}
+                          <h5 className="mt-2">Sorry! No Result Found</h5>
+                          <p className="text-muted mb-0">
+                            We've searched more than 150+ Orders We did not find
+                            any orders for you search.
+                          </p>
+                        </div>
+                      </div>
                     </div>
+                  </Card.Body>
+                </Card>
+              </Col>
+            </Row>
+          </div>
 
-                    <Modal id="showModal" className="fade zoomIn" size="lg" show={modal_AddCouponsModals} onHide={() => { tog_AddCouponsModals(); }} centered>
-                        <Modal.Header className="px-4 pt-4" closeButton>
-                            <h5 className="modal-title fs-18" id="exampleModalLabel">Add Coupons</h5>
-                        </Modal.Header>
-                        <Modal.Body className="p-4">
-                            <Form className="tablelist-form">
-                                <Row>
-                                    <div id="alert-error-msg" className="d-none alert alert-danger py-2"></div>
-                                    <input type="hidden" id="id-field" />                                
-                                    <Col lg={12}>
-                                        <div className="mb-3">
-                                            <Form.Label htmlFor="couponTitle">Coupon Title</Form.Label>
-                                            <Form.Control type="text" id="couponTitle-field" placeholder="Coupon title" required/>
-                                        </div>
-                                    </Col>
-                                    <Col lg={6}>
-                                        <div className="mb-3">
-                                            <Form.Label htmlFor="couponCode">Code</Form.Label>
-                                            <Form.Control type="text" id="code-field" placeholder="Enter coupon code" required/>
-                                        </div>
-                                    </Col>
-                                    <Col lg={6}>
+          <Modal
+            id="showModal"
+            className="fade zoomIn"
+            size="lg"
+            show={modal_AddCouponsModals}
+            onHide={() => {
+              tog_AddCouponsModals();
+            }}
+            centered
+          >
+            <Modal.Header className="px-4 pt-4" closeButton>
+              <h5 className="modal-title fs-18" id="exampleModalLabel">
+                Ajouter Client Physique
+              </h5>
+            </Modal.Header>
+            <Modal.Body className="p-4">
+              <Form className="tablelist-form" onSubmit={onSubmit}>
+                <Row>
+                  <div
+                    id="alert-error-msg"
+                    className="d-none alert alert-danger py-2"
+                  ></div>
+                  <input type="hidden" id="id-field" />
+                  <Col lg={12}>
+                    <div className="mb-3">
+                      <div className="position-relative d-inline-block">
+                        <div className="position-absolute top-100 start-100 translate-middle">
+                          <label
+                            htmlFor="avatar"
+                            className="mb-0"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="right"
+                            title="Select Client Physique Avatar"
+                          >
+                            <span className="avatar-xs d-inline-block">
+                              <span className="avatar-title bg-light border rounded-circle text-muted cursor-pointer">
+                                <i className="ri-image-fill"></i>
+                              </span>
+                            </span>
+                          </label>
+                          <input
+                            className="form-control d-none"
+                            type="file"
+                            name="avatar"
+                            id="avatar"
+                            accept="image/*"
+                            onChange={(e) => handleFileUpload(e)}
+                          />
+                        </div>
+                        <div className="avatar-lg">
+                          <div className="avatar-title bg-light rounded-3">
+                            <img
+                              src={`data:image/jpeg;base64, ${formData.avatar}`}
+                              alt=""
+                              id="category-img"
+                              className="avatar-md h-auto rounded-3 object-fit-cover"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="error-msg mt-1">
+                        Please add a category images.
+                      </div>
+                    </div>
+                  </Col>
+                  <Col lg={12}>
+                    <div className="mb-3">
+                      <Form.Label htmlFor="raison_sociale">
+                        Raison Sociale
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={formData.raison_sociale}
+                        onChange={onChange}
+                        id="raison_sociale"
+                        placeholder="Taper Raison sociale"
+                        required
+                      />
+                    </div>
+                  </Col>
+                  <Col lg={6}>
+                    <div className="mb-3">
+                      <Form.Label htmlFor="couponCode">Adresse</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={formData.raison_sociale}
+                        onChange={onChange}
+                        id="code-field"
+                        placeholder="Taper l'adresse du fournisseur"
+                        required
+                      />
+                    </div>
+                  </Col>
+                  <Col lg={6}>
+                    <div className="mb-3">
+                      <Form.Label htmlFor="tel">Telephone</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={formData.tel}
+                        onChange={onChange}
+                        id="tel"
+                        placeholder="taper numéro"
+                        required
+                      />
+                    </div>
+                  </Col>
+                  <Col lg={6}>
+                    <div className="mb-3">
+                      <Form.Label htmlFor="cin">cin</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={formData.cin}
+                        onChange={onChange}
+                        id="cin"
+                        placeholder="taper cin"
+                        required
+                      />
+                    </div>
+                  </Col>
+                  <Col lg={6}>
+                    <div className="mb-3">
+                      <Form.Label htmlFor="rib">RIB</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={formData.rib}
+                        onChange={onChange}
+                        id="rib"
+                        placeholder="taper RIB "
+                        required
+                      />
+                    </div>
+                  </Col>
+                  <Col lg={6}>
+                    <div className="mb-3">
+                      <Form.Label htmlFor="mail">E-mail</Form.Label>
+                      <Form.Control
+                        type="email"
+                        value={formData.mail}
+                        onChange={onChange}
+                        id="mail"
+                        placeholder="Enter coupon code"
+                        required
+                      />
+                    </div>
+                  </Col>
+                  {/* <Col lg={6}>
                                         <div className="mb-3">
                                             <Form.Label htmlFor="ProductSelect">Product Type</Form.Label>
                                             <select className="form-select" name="categorySelect" id="productType-field">
@@ -207,13 +526,13 @@ const deleteHandler = async (id: any) => {
                                                 <option value="Books">Books</option>
                                                 <option value="Other Accessories">Other Accessories</option>
                                             </select>
-                                        </div>
-                                    </Col>
-                                    <Col lg={6}>
+                                        </div> */}
+                  {/* </Col> */}
+                  {/* <Col lg={6}>
                                         <div className="mb-3">
                                             <Form.Label htmlFor="startDate">Start Date</Form.Label>
                                             {/* <Form.Control type="text" id="startdate-field" data-provider="flatpickr" data-date-format="d M, Y" placeholder="Select date" required/> */}
-                                            <Flatpickr
+                  {/* <Flatpickr
                                                 className="form-control flatpickr-input"
                                                 placeholder='Select date'
                                                 options={{
@@ -221,8 +540,8 @@ const deleteHandler = async (id: any) => {
                                                 }}
                                             />
                                         </div>
-                                    </Col>
-                                    <Col lg={6}>
+                                    </Col> */}
+                  {/* <Col lg={6}>
                                         <div className="mb-3">
                                             <Form.Label htmlFor="endDate">END Date</Form.Label>
                                             <Flatpickr
@@ -233,81 +552,210 @@ const deleteHandler = async (id: any) => {
                                                 }}
                                             />
                                         </div>
-                                    </Col>
-                                    <Col lg={6}>
-                                        <div className="mb-3">
-                                            <Form.Label htmlFor="amountPercentage">Amount/Percentage</Form.Label>
-                                            <Form.Control type="text" id="discount-field" placeholder="Enter amount/percentage" required/>
-                                        </div>
-                                    </Col>                               
-                                    <Col lg={6}>
-                                        <div className="mb-3">
-                                            <Form.Label htmlFor="statusSelect">Status</Form.Label>
-                                            <select className="form-select" name="choices-single-default" id="status-Field">
-                                                <option value="">Status</option>
-                                                <option value="Active">Active</option>
-                                                <option value="Expired">Expired</option>                                            
-                                            </select>
-                                        </div>
-                                    </Col>
-                                    <Col lg={12} className="modal-footer">
-                                        <div className="hstack gap-2 justify-content-end">
-                                            <Button className="btn-ghost-danger" onClick={() => { tog_AddCouponsModals(); }}><i className="ri-close-line align-bottom me-1"></i> Close</Button>
-                                            <Button variant='primary' id="add-btn">Add Coupons</Button>
-                                        </div>
-                                    </Col>
-                                </Row>
-                            </Form>
-                        </Modal.Body>
-                    </Modal>
-
-                </Container>
-            </div>
-
-            <Offcanvas show={showCoupons} onHide={() => setShowCoupons(!showCoupons)} placement="end">
-                <Offcanvas.Header closeButton>
-                    <Offcanvas.Title>Cyber Sale</Offcanvas.Title>
-                </Offcanvas.Header>
-                <Offcanvas.Body>
-                    <div>
-                        <img src={offerbanner} alt="" className="img-thumbnail" />
+                                    </Col> */}
+                  <Col lg={6}>
+                    <div className="mb-3">
+                      <Form.Label htmlFor="statusSelect">Statut</Form.Label>
+                      <select
+                        className="form-select"
+                        name="choices-single-default"
+                        id="status-Field"
+                      >
+                        <option value="">Status</option>
+                        <option value="Active">Actif</option>
+                        <option value="Expired">Inactif</option>
+                      </select>
                     </div>
-                    <div className="mt-3">
-                        <div className="table-responsive">
-                            <table className="table table-borderless">
-                                <tbody><tr>
-                                    <td><span className="text-muted">Use Code</span></td>
-                                    <td><span className="fw-medium">{showCouponDetails.code}</span></td>
-                                </tr>
-                                    <tr>
-                                        <td><span className="text-muted">Discount</span></td>
-                                        <td><span className="fw-medium text-uppercase">{showCouponDetails.discount}</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span className="text-muted">Start Date</span></td>
-                                        <td><span className="fw-medium">{showCouponDetails.startDate}</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span className="text-muted">END Date</span></td>
-                                        <td><span className="fw-medium">{showCouponDetails.endDate}</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span className="text-muted">Product Type</span></td>
-                                        <td><span className="fw-medium">{showCouponDetails.productType}</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span className="text-muted">Status</span></td>
-                                        <td><span className={showCouponDetails.status === "Expired" ? "badge badge-soft-danger text-uppercase" : "badge badge-soft-success text-uppercase"}>{showCouponDetails.status}</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                  </Col>
+                  <Col lg={6}>
+                    <div className="mb-3">
+                      <Form.Label htmlFor="remarque">remarque</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={formData.remarque}
+                        onChange={onChange}
+                        id="remarque"
+                        placeholder="Enter coupon code"
+                        required
+                      />
+                    </div>
+                  </Col>
+                  <Col lg={6}>
+                    <div className="mb-3">
+                      <Form.Label htmlFor="credit">credit</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={formData.credit}
+                        onChange={onChange}
+                        id="credit"
+                        placeholder="Enter coupon code"
+                        required
+                      />
+                    </div>
+                  </Col>
+                  <Col lg={12}>
+                    <div className="mb-3">
+                      <label htmlFor="avatar" className="form-label d-block">
+                        Piece Jointes <span className="text-danger">*</span>
+                      </label>
+
+                      <div className="position-relative d-inline-block">
+                        <div className="position-absolute top-100 start-100 translate-middle">
+                          <label
+                            htmlFor="piecejointes"
+                            className="mb-0"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="right"
+                            title="Select Client Physique Avatar"
+                          >
+                            <span className="avatar-xs d-inline-block">
+                              <span className="avatar-title bg-light border rounded-circle text-muted cursor-pointer">
+                                <i className="ri-image-fill"></i>
+                              </span>
+                            </span>
+                          </label>
+                          <input
+                            className="form-control d-none"
+                            type="file"
+                            name="piecejointes"
+                            id="piecejointes"
+                            accept="image/*"
+                            onChange={(e) => handleFileUpload(e)}
+                          />
                         </div>
-                    </div>
-                </Offcanvas.Body>
-            </Offcanvas>
+                        <div className="avatar-lg">
+                          <div className="avatar-title bg-light rounded-3">
+                            <img
+                              src={`data:image/jpeg;base64, ${formData.piecejointes}`}
+                              alt=""
+                              id="category-img"
+                              className="avatar-md h-auto rounded-3 object-fit-cover"
+                            />
+                          </div>
+                        </div>
+                      </div>
 
-        </React.Fragment >
-    );
+                      <div className="error-msg mt-1">
+                        Please add a category images.
+                      </div>
+                    </div>
+                  </Col>
+                  <Col lg={12} className="modal-footer">
+                    <div className="hstack gap-2 justify-content-end">
+                      <Button
+                        className="btn-ghost-danger"
+                        onClick={() => {
+                          tog_AddCouponsModals();
+                        }}
+                      >
+                        <i className="ri-close-line align-bottom me-1"></i>{" "}
+                        Close
+                      </Button>
+                      <Button type={"submit"} onClick={() => {
+                          tog_AddCouponsModals();
+                        }} variant="primary" id="add-btn">
+                        Ajouter
+                      </Button>
+                    </div>
+                  </Col>
+                </Row>
+              </Form>
+            </Modal.Body>
+          </Modal>
+        </Container>
+      </div>
+
+      <Offcanvas
+        show={showCoupons}
+        onHide={() => setShowCoupons(!showCoupons)}
+        placement="end"
+      >
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Cyber Sale</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <div>
+            <img src={offerbanner} alt="" className="img-thumbnail" />
+          </div>
+          <div className="mt-3">
+            <div className="table-responsive">
+              <table className="table table-borderless">
+                <tbody>
+                  <tr>
+                    <td>
+                      <span className="text-muted">Use Code</span>
+                    </td>
+                    <td>
+                      <span className="fw-medium">
+                        {showCouponDetails.code}
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span className="text-muted">Discount</span>
+                    </td>
+                    <td>
+                      <span className="fw-medium text-uppercase">
+                        {showCouponDetails.discount}
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span className="text-muted">Start Date</span>
+                    </td>
+                    <td>
+                      <span className="fw-medium">
+                        {showCouponDetails.startDate}
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span className="text-muted">END Date</span>
+                    </td>
+                    <td>
+                      <span className="fw-medium">
+                        {showCouponDetails.endDate}
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span className="text-muted">Product Type</span>
+                    </td>
+                    <td>
+                      <span className="fw-medium">
+                        {showCouponDetails.productType}
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span className="text-muted">Status</span>
+                    </td>
+                    <td>
+                      <span
+                        className={
+                          showCouponDetails.status === "Expired"
+                            ? "badge badge-soft-danger text-uppercase"
+                            : "badge badge-soft-success text-uppercase"
+                        }
+                      >
+                        {showCouponDetails.status}
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </Offcanvas.Body>
+      </Offcanvas>
+      <ToastContainer />
+    </React.Fragment>
+  );
 };
 
 export default Coupons;

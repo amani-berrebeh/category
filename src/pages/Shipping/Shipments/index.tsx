@@ -5,10 +5,68 @@ import TableContainer from "Common/TableContainer";
 import { shipments } from "Common/data";
 import { Link } from 'react-router-dom';
 import Flatpickr from "react-flatpickr";
+import { useGetAllArrivagesQuery,useAddArrivageMutation,useDeleteArrivageMutation, Arrivage } from 'features/arrivage/arrivageSlice';
+import { toast } from 'react-toastify';
+import {useFetchFournisseurQuery} from "../../../features/fournisseur/fournisseurSlice"
 
 const Shipments = () => {
 
     document.title = "Shipments | Toner eCommerce + Admin React Template";
+    const notify = () => {
+        toast.success("Le Client Physique a été créé avec succès", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      };
+
+    const { data = [] } = useGetAllArrivagesQuery();
+    const {data:allfournisseur=[]}=useFetchFournisseurQuery();
+    const [deleteArrivage]= useDeleteArrivageMutation();
+    const [addArrivage]=useAddArrivageMutation();
+
+    const deleteHandler = async (id: any) => {
+        await deleteArrivage(id);
+      };
+
+
+      const [formData, setFormData] = useState({
+        idArrivage: 0,
+        designation: "",
+        montantTotal: 0,
+        dateArrivage: "",
+        raison_sociale: "",
+        fournisseurID:9
+      });
+    
+      const {
+        idArrivage,
+        designation,
+        montantTotal,
+        dateArrivage,
+        raison_sociale,fournisseurID
+      } = formData;
+    
+
+
+      const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData((prevState) => ({
+          ...prevState,
+          [e.target.id]: e.target.value,
+        }));
+      };
+    
+      const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        addArrivage(formData).then(() => setFormData(formData));
+        notify();
+      };
+
 
     const [modal_AddShippingModals, setmodal_AddShippingModals] = useState<boolean>(false);
     function tog_AddShippingModals() {
@@ -18,82 +76,51 @@ const Shipments = () => {
     const columns = useMemo(
         () => [
             {
-                Header: "Order ID",
+                Header: "ID arrivage",
                 disableFilters: true,
                 filterable: true,
-                accessor: (cellProps: any) => {
-                    return (<Link to="#" className="fw-medium link-primary">{cellProps.orderId}</Link>)
-                },
+                accessor: "idArrivage"
             },
             {
-                Header: "Shipment No",
-                accessor: "shipment_no",
+                Header: "designation",
+                accessor: "designation",
                 disableFilters: true,
                 filterable: true,
             },
             {
-                Header: "Customer",
-                accessor: "customer_name",
+                Header: "montant Total",
+                accessor: "montantTotal",
+                disableFilters: true,
+                filterable: true,
+            },
+        
+           
+            {
+                Header: "date Arrivage",
+                accessor: "dateArrivage",
                 disableFilters: true,
                 filterable: true,
             },
             {
-                Header: "Supplier",
-                accessor: "supplier",
+                Header: "Fournisseur",
+                accessor: "raison_sociale",
                 disableFilters: true,
                 filterable: true,
             },
-            {
-                Header: "Location",
-                accessor: "location",
-                disableFilters: true,
-                filterable: true,
-            },
-            {
-                Header: "Order Date",
-                accessor: "order_date",
-                disableFilters: true,
-                filterable: true,
-            },
-            {
-                Header: "Arrival Date",
-                accessor: "arrival_date",
-                disableFilters: true,
-                filterable: true,
-            },
-            {
-                Header: "Status",
-                disableFilters: true,
-                filterable: true,
-                accessor: (cellProps: any) => {
-                    switch (cellProps.status) {
-                        case "Delivered":
-                            return (<span className="badge badge-soft-success"> {cellProps.status}</span>)
-                        case "Out Of Delivery":
-                            return (<span className="badge badge-soft-danger"> {cellProps.status}</span>)
-                        case "Pending":
-                            return (<span className="badge badge-soft-warning"> {cellProps.status}</span>)
-                        case "Pickups":
-                            return (<span className="badge badge-soft-secondary"> {cellProps.status}</span>)
-                        case "Shipping":
-                            return (<span className="badge badge-soft-info"> {cellProps.status}</span>)
-                        default:
-                            return (<span className="badge badge-soft-success"> {cellProps.status}</span>)
-                    }
-                },
-            },
+           
+           
             {
                 Header: "Action",
                 disableFilters: true,
                 filterable: true,
-                accessor: (cellProps: any) => {
+                accessor: (arrivage: Arrivage) => {
                     return (
                         <ul className="hstack gap-2 list-unstyled mb-0">
                             <li>
-                                <Link to="#" className="badge badge-soft-primary edit-item-btn">Edit</Link>
+                                <Link to="#" className="badge badge-soft-primary edit-item-btn" >Edit</Link>
                             </li>
                             <li>
-                                <Link to="#" className="badge badge-soft-danger remove-item-btn">Delete</Link>
+                                <Link to="#" className="badge badge-soft-danger remove-item-btn"  onClick={()=>deleteHandler(arrivage.idArrivage)}>Delete</Link>
                             </li>
                         </ul>
                     )
@@ -138,7 +165,7 @@ const Shipments = () => {
                                         }}
                                     />
                                 </Col>
-                                <Col xxl={2} lg={6}>
+                                {/* <Col xxl={2} lg={6}>
                                     <select className="form-select" data-choices data-choices-search-false name="choices-single-default" id="idStatus">
                                         <option value="">Status</option>
                                         <option value="Pickups">Pickups</option>
@@ -159,17 +186,17 @@ const Shipments = () => {
                                         <option value="This Month">This Month</option>
                                         <option value="Last Month">Last Month</option>
                                     </select>
-                                </Col>
-                                <Col xxl={2} lg={6}>
+                                </Col> */}
+                                {/* <Col xxl={2} lg={6}>
                                     <Button variant="primary" type="button" className="w-100">Filters</Button>
-                                </Col>
+                                </Col> */}
                             </Row>
                         </Card.Header>
                         <Card.Body>
                             <div className="table-responsive table-card">
                                 <TableContainer
                                     columns={(columns || [])}
-                                    data={(shipments || [])}
+                                    data={(data || [])}
                                     // isGlobalFilter={false}
                                     iscustomPageSize={false}
                                     isBordered={false}
@@ -196,40 +223,46 @@ const Shipments = () => {
 
                     <Modal className="fade zoomIn" size="lg" show={modal_AddShippingModals} onHide={() => { tog_AddShippingModals(); }} centered>
                         <Modal.Header className="px-4 pt-4" closeButton>
-                            <h5 className="modal-title fs-18" id="exampleModalLabel">Create Shipping</h5>
+                            <h5 className="modal-title fs-18" id="exampleModalLabel">Ajouter Arrivage</h5>
                         </Modal.Header>
                         <Modal.Body className="p-4">
                             <div id="alert-error-msg" className="d-none alert alert-danger py-2"></div>
-                            <Form className="tablelist-form">
+                            <Form className="tablelist-form" onSubmit={onSubmit}>
                                 <input type="hidden" id="id-field" />
                                 <Row>
                                     <Col lg={12}>
                                         <div className="mb-3">
-                                            <Form.Label htmlFor="customerName-field">Customer Name</Form.Label>
-                                            <Form.Control type="text" id="customerName-field" placeholder="Enter customer name" required />
+                                            <Form.Label htmlFor="designation">Designation</Form.Label>
+                                            <Form.Control type="text" id="designation"  onChange={onChange} placeholder="designation" value={formData.designation} required />
                                         </div>
                                     </Col>
+                                    {/* <Col lg={12}>
+                                        <div className="mb-3">
+                                            <Form.Label htmlFor="raison_sociale">Fournisseur</Form.Label>
+                                            <Form.Control type="text" id="raison_sociale" placeholder="taper raison sociale" onChange={onChange} value={formData.raison_sociale} required />
+                                        </div>
+                                    </Col> */}
                                     <Col lg={12}>
                                         <div className="mb-3">
-                                            <Form.Label htmlFor="supplierName-field">Supplier Name</Form.Label>
-                                            <Form.Control type="text" id="supplierName-field" placeholder="Enter supplier name" required />
+                                            <Form.Label htmlFor="montantTotal">Montant Total</Form.Label>
+                                            <Form.Control type="text" id="montantTotal" placeholder="taper le total" onChange={onChange} value={formData.montantTotal} required />
                                         </div>
                                     </Col>
 
                                     <Col lg={6}>
                                         <div className="mb-3">
-                                            <Form.Label htmlFor="orderDate-field">Order Date</Form.Label>
-                                            <Flatpickr
+                                            <Form.Label htmlFor="dateArrivage">Date d'arrivage</Form.Label>
+                                            {/* <Flatpickr
                                                 className="form-control flatpickr-input"
-                                                placeholder='Select Date'
+                                                placeholder='Selectionner la Date'
                                                 options={{
                                                     dateFormat: "d M, Y",
                                                 }}
-                                            />
-                                            {/* <Form.Control type="text" id="orderDate-field" data-provider="flatpickr" data-date-format="d M, Y" placeholder="Select date" required /> */}
+                                            /> */}
+                                            <Form.Control type="text" id="dateArrivage"  placeholder="Select date" onChange={onChange} value={formData.dateArrivage} required />
                                         </div>
                                     </Col>
-                                    <Col lg={6}>
+                                    {/* <Col lg={6}>
                                         <div className="mb-3">
                                             <Form.Label htmlFor="arrivalDate-field">Arrival Date</Form.Label>
                                             <Flatpickr
@@ -240,9 +273,9 @@ const Shipments = () => {
                                                 }}
                                             />
                                             {/* <Form.Control type="text" id="arrivalDate-field" data-provider="flatpickr" data-date-format="d M, Y" placeholder="Select date" required /> */}
-                                        </div>
-                                    </Col>
-                                    <div className="col-lg-6">
+                                        {/* </div>
+                                    </Col> */} 
+                                    {/* <div className="col-lg-6">
                                         <div className="mb-3">
                                             <label htmlFor="locationSelect" className="form-label">Location</label>
                                             <select className="form-select" name="choices-single-default" id="locationSelect" required>
@@ -293,24 +326,26 @@ const Shipments = () => {
                                                 <option value="Jersey">Jersey</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div>*/}
                                     <Col lg={6}>
                                         <div className="mb-3">
-                                            <label htmlFor="statusSelect" className="form-label">Status</label>
+                                            <label htmlFor="statusSelect" className="form-label">Fournisseur</label>
                                             <select className="form-select" name="choices-single-default" id="statusSelect" required>
-                                                <option value="">Status</option>
-                                                <option value="Pickups">Pickups</option>
-                                                <option value="Pending">Pending</option>
-                                                <option value="Shipping">Shipping</option>
-                                                <option value="Delivered">Delivered</option>
-                                                <option value="Out Of Delivery">Out Of Delivery</option>
+                                                <option value="">raison sociale</option>
+                                                {allfournisseur.map((fournisseur)=>(
+
+                                                    <option key={formData.fournisseurID} value={formData.fournisseurID}>{fournisseur.idfournisseur}</option>
+                                                )
+
+                                                )}
+                                               
                                             </select>
                                         </div>
-                                    </Col>
+                                    </Col> 
                                     <Col lg={12}>
                                         <div className="hstack gap-2 justify-content-end">
-                                            <Button className="btn-ghost-danger" onClick={() => { tog_AddShippingModals(); }} data-bs-dismiss="modal"><i className="ri-close-line align-bottom me-1"></i> Close</Button>
-                                            <Button variant='primary' id="add-btn">Add Shipping</Button>
+                                            <Button className="btn-ghost-danger" onClick={() => { tog_AddShippingModals(); }} data-bs-dismiss="modal"><i className="ri-close-line align-bottom me-1"></i> Fermer</Button>
+                                            <Button variant='primary' id="add-btn" type="submit">Ajouter</Button>
                                         </div>
                                     </Col>
                                 </Row>
