@@ -246,7 +246,7 @@ const UserList = () => {
         accessor: (clientMorale: ClientMorale) => {
           return (
             <ul className="hstack gap-2 list-unstyled mb-0">
-              <li>
+              {/* <li>
                 <Link
                   to="#couponDetails"
                   data-bs-toggle="offcanvas"
@@ -258,7 +258,7 @@ const UserList = () => {
                 >
                   View
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link
                   to="#showModal"

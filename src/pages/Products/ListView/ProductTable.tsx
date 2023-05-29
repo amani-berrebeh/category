@@ -126,14 +126,33 @@ const ProductTable = () => {
 
   const columns = useMemo(() => [
     {
-      Header: "Nom",
-      accessor: "nomProduit",
-      Filter: false,
+      Header: "Nom Produit",
+      disableFilters: true,
+      filterable: true,
+      accessor: (produit: Produit) => {
+        return (
+              <>
+          <div className="d-flex align-items-center gap-2">
+            <div className="flex-shrink-0">
+              <img
+                src={`data:image/jpeg;base64, ${produit.imageProduit}`}
+                alt=""
+                className="avatar-xs rounded-circle user-profile-img"
+                />
+            </div>
+            <div className="flex-grow-1 ms-2 user_name">
+              {produit.nomProduit}
+            </div>
+            
+          </div><div className="flex-grow-1 ms-2 user_name">{produit.nom}</div>
+                </>
+        );
+      },
     },
     {
-      Header: "Categorie",
+      Header: "category",
       accessor: "nom",
-      Filter: false,
+      Filter: true,
     },
     
     {
@@ -154,7 +173,7 @@ const ProductTable = () => {
    
     {
       Header: "Action",
-      Cell: (cellProps: any) => {
+      Cell: (produit: Produit) => {
         return (
           <React.Fragment>
             <Dropdown className="text-center">
@@ -163,12 +182,12 @@ const ProductTable = () => {
               </Dropdown.Toggle>
               <Dropdown.Menu as="ul" className="dropdown-menu-end">
                 <li>
-                  <Dropdown.Item href="/product-create">
+                  <Dropdown.Item href="/product-create" >
                     <i className="ri-pencil-fill align-bottom me-2 text-muted" /> Edit
                   </Dropdown.Item>
                 </li>
                 <li>
-                  <Dropdown.Item href="#" className="remove-list">
+                  <Dropdown.Item href="#" className="remove-list" onClick={()=> deleteHandler(produit.idproduit)}>
                     <i className="ri-delete-bin-fill align-bottom me-2 text-muted" />Delete
                   </Dropdown.Item>
                 </li>

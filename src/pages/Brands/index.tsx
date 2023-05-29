@@ -13,7 +13,7 @@ const InvoiceList = () => {
     <React.Fragment>
       <div className="page-content">
         <Container fluid={true}>
-          <Breadcrumb title="Charges" pageTitle="Tableau de Bord" />
+          <Breadcrumb title="Charge" pageTitle="Tableau de Bord" />
 
           <Row>
             <Col xl={3} md={6}>

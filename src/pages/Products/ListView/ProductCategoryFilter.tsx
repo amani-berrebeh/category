@@ -9,8 +9,14 @@ import ProductSelectColor from './ProductSelectColor';
 import ProductSize from './ProductSize';
 import ProductDiscount from './ProductDiscount';
 import ProductRating from './ProductRating';
+import { useFetchCategoriesQuery } from 'features/category/categorySlice';
+import Categories from './../Categories/index';
 
 const ProductCategoryFilter = () => {
+
+    const {data=[]}=useFetchCategoriesQuery();
+
+
     const [mincost, setMincost] = useState<number>(0);
     const [maxcost, setMaxcost] = useState<number>(2000);
 
@@ -27,77 +33,19 @@ const ProductCategoryFilter = () => {
             <Accordion flush defaultActiveKey="0" className="filter-accordion">
                 <Card.Body className="border-bottom">
                     <div>
-                        <p className="text-muted text-uppercase fs-13 mb-3">Products</p>
+                        <p className="text-muted text-uppercase fs-13 mb-3">Categories</p>
                         <ul className="list-unstyled mb-0 filter-list">
-                            <li>
-                                <Link to="#" className="d-flex py-1 align-items-center">
-                                    <div className="flex-grow-1">
-                                        <h6 className="mb-0 listname">Grocery</h6>
-                                    </div>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="#" className="d-flex py-1 align-items-center">
-                                    <div className="flex-grow-1">
-                                        <h6 className="mb-0 listname">Fashion</h6>
-                                    </div>
-                                    <div className="flex-shrink-0 ms-2">
-                                        <span className="badge bg-light text-muted">5</span>
-                                    </div>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="#" className="d-flex py-1 align-items-center">
-                                    <div className="flex-grow-1">
-                                        <h6 className="mb-0 listname">Watches</h6>
-                                    </div>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="#" className="d-flex py-1 align-items-center">
-                                    <div className="flex-grow-1">
-                                        <h6 className="mb-0 listname">Electronics</h6>
-                                    </div>
-                                    <div className="flex-shrink-0 ms-2">
-                                        <span className="badge bg-light text-muted">5</span>
-                                    </div>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="#" className="d-flex py-1 align-items-center">
-                                    <div className="flex-grow-1">
-                                        <h6 className="mb-0 listname">Furniture</h6>
-                                    </div>
-                                    <div className="flex-shrink-0 ms-2">
-                                        <span className="badge bg-light text-muted">6</span>
-                                    </div>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="#" className="d-flex py-1 align-items-center">
-                                    <div className="flex-grow-1">
-                                        <h6 className="mb-0 listname">Automotive Accessories</h6>
-                                    </div>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="#" className="d-flex py-1 align-items-center">
-                                    <div className="flex-grow-1">
-                                        <h6 className="mb-0 listname">Appliances</h6>
-                                    </div>
-                                    <div className="flex-shrink-0 ms-2">
-                                        <span className="badge bg-light text-muted">7</span>
-                                    </div>
-                                </Link>
-                            </li>
+                            {data.map(category=>(
 
-                            <li>
+                                <li key={category.idcategory}>
                                 <Link to="#" className="d-flex py-1 align-items-center">
                                     <div className="flex-grow-1">
-                                        <h6 className="mb-0 listname">Kids</h6>
+                                        <h6 className="mb-0 listname">{category.nom}</h6>
                                     </div>
                                 </Link>
                             </li>
+                                ))}
+                           
                         </ul>
                     </div>
                 </Card.Body>
@@ -123,18 +71,18 @@ const ProductCategoryFilter = () => {
                 </Card.Body>
 
                 {/* ProductSelectColor */}
-                <Accordion.Item eventKey="0">
+                {/* <Accordion.Item eventKey="0">
                     <ProductSelectColor />
-                </Accordion.Item>
+                </Accordion.Item> */}
 
                 {/* ProductSize */}
-                <ProductSize />
+                {/* <ProductSize /> */}
 
                 {/* ProductDiscount */}
                 <ProductDiscount />
 
                 {/* ProductRating */}
-                <ProductRating />
+                {/* <ProductRating /> */}
             </Accordion>
         </React.Fragment>
     )

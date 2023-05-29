@@ -76,13 +76,12 @@ const Navdata = () => {
             label: "Tableau de bord",
             icon: "bi bi-speedometer2",
             link: "/dashboard",
-            badgeName : "Hot",
-            badgeColor : "danger"
+   
         },
         {
             id: "invoice",
             label: "Facturation",
-            icon: "bi bi-archive",
+            icon: "bi bi-file-earmark-post",
             link: "/#",
             click: function (e: any) {
                 e.preventDefault();
@@ -114,8 +113,8 @@ const Navdata = () => {
         },
         {
             id: "brands",
-            label: "Charges",
-            icon: "bi bi-shop",
+            label: "Charge",
+            icon: "bi bi-currency-dollar",
             link: "/charges",
         },
         // {
@@ -148,51 +147,31 @@ const Navdata = () => {
         {
             id: "seller",
             label: "Fournisseur",
-            icon: "bi bi-binoculars",
+            icon: "bi bi-person-vcard-fill",
             link: "/seller-grid-view",
         },
         {
             id: "userslist",
-            label: "Clients morales",
-            icon: "bi bi-person-bounding-box",
+            label: "Client morale",
+            icon: "bi bi-buildings-fill",
             link: "/users-list",
         },
         {
             id: "coupons",
             label: "Client physique",
-            icon: "bi bi-tag",
+            icon: "bi bi-person-bounding-box",
             link: "/coupons",
         },
         {
             id: "shipping",
             label: "Arrivage",
             icon: "bi bi-truck",
-            link: "/#",
-            click: function (e: any) {
-                e.preventDefault();
-                setIsShipping(!isShipping);
-                setIscurrentState('Shipping');
-                updateIconSidebar(e);
-            },
-            stateVariables: isShipping,
-            subItems: [
-                {
-                    id: "shippinglist",
-                    label: "Shipping List",
-                    link: "/shipping-list",
-                    parentId: "shipping",
-                },
-                {
-                    id: "shipments",
-                    label: "Shipments",
-                    link: "/shipments",
-                    parentId: "shipping",
-                },
-            ],
+            link: "/shipments",
+           
         },
         {
             id: "products",
-            label: "Produits",
+            label: "Produit",
             icon: "bi bi-box-seam",
             link: "/#",
             click: function (e: any) {
@@ -209,12 +188,12 @@ const Navdata = () => {
                     link: "/products-list",
                     parentId: "products",
                 },
-                {
-                    id: "gridview",
-                    label: "Produits en cartes",
-                    link: "/products-grid",
-                    parentId: "products",
-                },
+                // {
+                //     id: "gridview",
+                //     label: "Produits en cartes",
+                //     link: "/products-grid",
+                //     parentId: "products",
+                // },
                 // {
                 //     id: "overview",
                 //     label: "Overview",
@@ -229,13 +208,13 @@ const Navdata = () => {
                 },
                 {
                     id: "categories",
-                    label: "Categories",
+                    label: "Categorie",
                     link: "/categories",
                     parentId: "products",
                 },
                 {
                     id: "subcategories",
-                    label: "Sous Categories",
+                    label: "Sous-categorie",
                     link: "/sub-categories",
                     parentId: "products",
                 },
@@ -294,7 +273,7 @@ const Navdata = () => {
        
         {
             id: "accounts",
-            label: "Comptes",
+            label: "Compte",
             icon: "bi bi-person-circle",
             link: "/#",
             click: function (e: any) {

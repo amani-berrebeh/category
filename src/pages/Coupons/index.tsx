@@ -247,7 +247,7 @@ const Coupons = () => {
         accessor: (clientPhy: ClientPhysique) => {
           return (
             <ul className="hstack gap-2 list-unstyled mb-0">
-              <li>
+              {/* <li>
                 <Link
                   to="#couponDetails"
                   data-bs-toggle="offcanvas"
@@ -259,7 +259,7 @@ const Coupons = () => {
                 >
                   View
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link
                   to="#showModal"
@@ -310,7 +310,7 @@ const Coupons = () => {
                             type="text"
                             className="form-control search"
                             id="searchProductList"
-                            placeholder="Search by coupons code & name..."
+                            placeholder="Rechercher client par nom, date..."
                           />
                           <i className="ri-search-line search-icon"></i>
                         </div>
@@ -434,7 +434,7 @@ const Coupons = () => {
                   <Col lg={12}>
                     <div className="mb-3">
                       <Form.Label htmlFor="raison_sociale">
-                        Raison Sociale
+                        Nom Client
                       </Form.Label>
                       <Form.Control
                         type="text"
@@ -448,12 +448,12 @@ const Coupons = () => {
                   </Col>
                   <Col lg={6}>
                     <div className="mb-3">
-                      <Form.Label htmlFor="couponCode">Adresse</Form.Label>
+                      <Form.Label htmlFor="adresse">Adresse</Form.Label>
                       <Form.Control
                         type="text"
-                        value={formData.raison_sociale}
+                        value={formData.adresse}
                         onChange={onChange}
-                        id="code-field"
+                        id="adresse"
                         placeholder="Taper l'adresse du fournisseur"
                         required
                       />
@@ -474,7 +474,7 @@ const Coupons = () => {
                   </Col>
                   <Col lg={6}>
                     <div className="mb-3">
-                      <Form.Label htmlFor="cin">cin</Form.Label>
+                      <Form.Label htmlFor="cin">CIN</Form.Label>
                       <Form.Control
                         type="text"
                         value={formData.cin}
@@ -582,7 +582,7 @@ const Coupons = () => {
                   </Col>
                   <Col lg={6}>
                     <div className="mb-3">
-                      <Form.Label htmlFor="credit">credit</Form.Label>
+                      <Form.Label htmlFor="credit">Credit</Form.Label>
                       <Form.Control
                         type="text"
                         value={formData.credit}
@@ -596,7 +596,7 @@ const Coupons = () => {
                   <Col lg={12}>
                     <div className="mb-3">
                       <label htmlFor="avatar" className="form-label d-block">
-                        Piece Jointes <span className="text-danger">*</span>
+                        Piece-Jointe <span className="text-danger">*</span>
                       </label>
 
                       <div className="position-relative d-inline-block">
@@ -649,7 +649,7 @@ const Coupons = () => {
                         }}
                       >
                         <i className="ri-close-line align-bottom me-1"></i>{" "}
-                        Close
+                        Fermer
                       </Button>
                       <Button type={"submit"} onClick={() => {
                           tog_AddCouponsModals();

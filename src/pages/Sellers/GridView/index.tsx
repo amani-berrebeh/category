@@ -700,7 +700,7 @@ const SellersGridView = () => {
                 Ajouter Fournisseur
               </Button>
             </Col>
-            <Col xxl={2} sm={6}>
+            {/* <Col xxl={2} sm={6}>
               <select
                 className="form-select mt-3 mt-sm-0"
                 data-choices
@@ -716,7 +716,7 @@ const SellersGridView = () => {
                 <option defaultValue="This Month">This Month</option>
                 <option value="Last Month">Last Month</option>
               </select>
-            </Col>
+            </Col> */}
           </Row>
 
           <Modal
