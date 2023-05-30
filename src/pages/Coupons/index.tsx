@@ -145,7 +145,7 @@ const Coupons = () => {
         accessor: "idclient_p",
       },
       {
-        Header: "avatar",
+        Header: "Avatar",
         disableFilters: true,
         filterable: true,
         accessor: (clienphy: ClientPhysique) => {
@@ -163,7 +163,7 @@ const Coupons = () => {
         },
       },
       {
-        Header: "raison sociale",
+        Header: "Nom Client",
         accessor: "raison_sociale",
         disableFilters: true,
         filterable: true,
@@ -187,7 +187,7 @@ const Coupons = () => {
         filterable: true,
       },
       {
-        Header: "cin ",
+        Header: "C.I.N ",
         accessor: "cin",
         disableFilters: true,
         filterable: true,
@@ -229,13 +229,13 @@ const Coupons = () => {
         },
       },
       {
-        Header: "remarque",
+        Header: "Remarque",
         accessor: "remarque",
         disableFilters: true,
         filterable: true,
       },
       {
-        Header: "credit",
+        Header: "Credit",
         accessor: "credit",
         disableFilters: true,
         filterable: true,
@@ -266,7 +266,7 @@ const Coupons = () => {
                   className="badge badge-soft-primary edit-item-btn"
                   data-bs-toggle="modal"
                 >
-                  Edit
+                  Modifier
                 </Link>
               </li>
               <li>
@@ -276,7 +276,7 @@ const Coupons = () => {
                   data-bs-toggle="modal"
                   className="badge badge-soft-danger remove-item-btn"
                 >
-                  Delete
+                  Supprimer
                 </Link>
               </li>
             </ul>
@@ -467,20 +467,20 @@ const Coupons = () => {
                         value={formData.tel}
                         onChange={onChange}
                         id="tel"
-                        placeholder="taper numéro"
+                        placeholder="Taper numéro"
                         required
                       />
                     </div>
                   </Col>
                   <Col lg={6}>
                     <div className="mb-3">
-                      <Form.Label htmlFor="cin">CIN</Form.Label>
+                      <Form.Label htmlFor="cin">C.I.N</Form.Label>
                       <Form.Control
                         type="text"
                         value={formData.cin}
                         onChange={onChange}
                         id="cin"
-                        placeholder="taper cin"
+                        placeholder="Taper C.I.N"
                         required
                       />
                     </div>
@@ -493,7 +493,7 @@ const Coupons = () => {
                         value={formData.rib}
                         onChange={onChange}
                         id="rib"
-                        placeholder="taper RIB "
+                        placeholder="Taper RIB "
                         required
                       />
                     </div>
@@ -506,7 +506,7 @@ const Coupons = () => {
                         value={formData.mail}
                         onChange={onChange}
                         id="mail"
-                        placeholder="Enter coupon code"
+                        placeholder="Taper e-mail"
                         required
                       />
                     </div>
@@ -569,13 +569,13 @@ const Coupons = () => {
                   </Col>
                   <Col lg={6}>
                     <div className="mb-3">
-                      <Form.Label htmlFor="remarque">remarque</Form.Label>
+                      <Form.Label htmlFor="remarque">Remarque</Form.Label>
                       <Form.Control
                         type="text"
                         value={formData.remarque}
                         onChange={onChange}
                         id="remarque"
-                        placeholder="Enter coupon code"
+                        placeholder="Taper vos remarques"
                         required
                       />
                     </div>
@@ -588,7 +588,7 @@ const Coupons = () => {
                         value={formData.credit}
                         onChange={onChange}
                         id="credit"
-                        placeholder="Enter coupon code"
+                        placeholder="Taper crédit"
                         required
                       />
                     </div>

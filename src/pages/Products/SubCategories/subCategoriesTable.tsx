@@ -11,6 +11,10 @@ const SubCategoriesTable = () => {
     const [deleteSubCategory] = useDeleteSubCategoryMutation()
   const {data, error, isLoading, isFetching, isSuccess} = useFetchSubCategoriesQuery();
 
+  const deleteHandler = async (id: any) => {
+    await deleteSubCategory(id);
+  };
+
   const subCategoryUpdated = {
     "idSubCategory": 10,
     "title": "Sub Category 11",
@@ -27,8 +31,6 @@ const SubCategoriesTable = () => {
  
   return (
     <React.Fragment>
-                  {isLoading && <h2>....Loading!!</h2>}
-                  {isFetching && <h2>....Fetching!!</h2>}
                   {error && <h2>Something went wrong!</h2>}
                     <div className="table-responsive">
                       <Table className="align-middle table-nowrap mb-0">
@@ -50,15 +52,15 @@ const SubCategoriesTable = () => {
                             <td>{subcategory.nom}</td>
                             <td>
                               <ul className="hstack gap-2 list-unstyled mb-0">
-                                <li>
+                                {/* <li>
                                   <Link to="#" className="link-success">View More <i className="ri-arrow-right-line align-middle"></i></Link>
                                 </li>
-                                {/* <li>
-                                  <Link onClick={updateHandler} to="#" className="badge badge-soft-success">Edit</Link>
-                                </li>
                                 <li>
-                                  <Link onClick={deleteHandler} to="#" className="badge badge-soft-danger">Delete</Link>
+                                  <Link onClick={updateHandler} to="#" className="badge badge-soft-success">Edit</Link>
                                 </li> */}
+                                <li>
+                                  <Link onClick={()=>deleteHandler(subcategory.idSubCategory)} to="#" className="badge badge-soft-danger">Supprimer</Link>
+                                </li>
                               </ul>
                             </td>
                           </tr>

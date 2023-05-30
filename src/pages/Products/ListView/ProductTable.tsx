@@ -150,23 +150,23 @@ const ProductTable = () => {
       },
     },
     {
-      Header: "category",
+      Header: "Category",
       accessor: "nom",
       Filter: true,
     },
     
     {
-      Header: "prixAchatHt",
+      Header: "Prix Achat HT",
       accessor: "prixAchatHt",
       Filter: false
     },
     {
-      Header: "prixAchatTtc",
+      Header: "Prix Achat TTC",
       accessor: "prixAchatTtc",
       Filter: false,
     },
     {
-      Header: "prixVente",
+      Header: "Prix Vente",
       accessor: "prixVente",
       Filter: false,
     },
@@ -205,13 +205,13 @@ const ProductTable = () => {
       <Row className="g-4 mb-4">
           <Col className="col-sm-auto">
               <div>
-                <Link to="/product-create" className="btn btn-success" id="addproduct-btn"><i className="ri-add-line align-bottom me-1"></i> Add Product</Link>
+                <Link to="/product-create" className="btn btn-success" id="addproduct-btn"><i className="ri-add-line align-bottom me-1"></i> Ajouter Produit</Link>
               </div>
           </Col>
           <Col className="col-sm">
               <div className="d-flex justify-content-sm-end">
                   <div className="search-box ms-2">
-                    <Form.Control type="text" autoComplete="off" id="searchProductList" placeholder="Search Products..." />
+                    <Form.Control type="text" autoComplete="off" id="searchProductList" placeholder="Rechercher Produits..." />
                     <i className="ri-search-line search-icon"></i>
                   </div>
               </div>

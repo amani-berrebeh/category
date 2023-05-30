@@ -228,13 +228,13 @@ const UserList = () => {
         },
       },
       {
-        Header: "remarque",
+        Header: "Remarque",
         accessor: "remarque",
         disableFilters: true,
         filterable: true,
       },
       {
-        Header: "credit",
+        Header: "Credit",
         accessor: "credit",
         disableFilters: true,
         filterable: true,
@@ -265,7 +265,7 @@ const UserList = () => {
                   className="badge badge-soft-primary edit-item-btn"
                   data-bs-toggle="modal"
                 >
-                  Edit
+                  Modifier
                 </Link>
               </li>
               <li>
@@ -275,7 +275,7 @@ const UserList = () => {
                   data-bs-toggle="modal"
                   className="badge badge-soft-danger remove-item-btn"
                 >
-                  Delete
+                  Supprimer
                 </Link>
               </li>
             </ul>
@@ -296,7 +296,7 @@ const UserList = () => {
     <React.Fragment>
       <div className="page-content">
         <Container fluid={true}>
-          <Breadcrumb title="Coupons" pageTitle="Toner" />
+          <Breadcrumb title="Client Morale" pageTitle="Tableau de bord" />
           <div id="couponsList">
             <Row>
               <Col xxl={12}>
@@ -309,7 +309,7 @@ const UserList = () => {
                             type="text"
                             className="form-control search"
                             id="searchProductList"
-                            placeholder="Search by coupons code & name..."
+                            placeholder="Rechercher client par nom..."
                           />
                           <i className="ri-search-line search-icon"></i>
                         </div>
@@ -466,7 +466,7 @@ const UserList = () => {
                         value={formData.tel}
                         onChange={onChange}
                         id="tel"
-                        placeholder="taper numéro"
+                        placeholder="Taper numéro"
                         required
                       />
                     </div>
@@ -479,7 +479,7 @@ const UserList = () => {
                         value={formData.mat}
                         onChange={onChange}
                         id="mat"
-                        placeholder="taper matricule fiscale"
+                        placeholder="Taper matricule fiscale"
                         required
                       />
                     </div>
@@ -492,7 +492,7 @@ const UserList = () => {
                         value={formData.rib}
                         onChange={onChange}
                         id="rib"
-                        placeholder="taper RIB "
+                        placeholder="Taper RIB "
                         required
                       />
                     </div>
@@ -505,7 +505,7 @@ const UserList = () => {
                         value={formData.mail}
                         onChange={onChange}
                         id="mail"
-                        placeholder="Enter coupon code"
+                        placeholder="Taper e-mail"
                         required
                       />
                     </div>
@@ -513,38 +513,36 @@ const UserList = () => {
                   <Col lg={6}>
                     <div className="mb-3">
                       <Form.Label htmlFor="etat">Etat</Form.Label>
-                      <Form.Control
-                        type="text"
-                        value={formData.etat}
-                        onChange={onChange}
-                        id="etat"
-                        placeholder="Enter coupon code"
-                        required
-                      />
+                      <select className="form-select" data-choices data-choices-search-false id="choices-payment-status" required>
+                                                    <option value="">Selectionner Etat</option>
+                                                    <option value="Actif">Actif</option>
+                                                    <option value="Inactif">Inactif</option>
+                                                   
+                                                </select>
                     </div>
                   </Col>
                   <Col lg={6}>
                     <div className="mb-3">
-                      <Form.Label htmlFor="remarque">remarque</Form.Label>
+                      <Form.Label htmlFor="remarque">Remarque</Form.Label>
                       <Form.Control
                         type="text"
                         value={formData.remarque}
                         onChange={onChange}
                         id="remarque"
-                        placeholder="Enter coupon code"
+                        placeholder="Taper remarque"
                         required
                       />
                     </div>
                   </Col>
                   <Col lg={6}>
                     <div className="mb-3">
-                      <Form.Label htmlFor="credit">credit</Form.Label>
+                      <Form.Label htmlFor="credit">Credit</Form.Label>
                       <Form.Control
                         type="text"
                         value={formData.credit}
                         onChange={onChange}
                         id="credit"
-                        placeholder="Enter coupon code"
+                        placeholder="Entrer crédit"
                         required
                       />
                     </div>
@@ -647,7 +645,7 @@ const UserList = () => {
                         }}
                       >
                         <i className="ri-close-line align-bottom me-1"></i>{" "}
-                        Close
+                        Fermer
                       </Button>
                       <Button onClick={() => {
                           tog_AddCouponsModals();

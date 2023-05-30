@@ -52,7 +52,7 @@ const ProductCategoryFilter = () => {
 
                 <Card.Body className="border-bottom">
                     <p className="text-muted text-uppercase fs-12 fw-medium mb-4">
-                        Price
+                        Prix
                     </p>
 
                     <Nouislider
@@ -65,7 +65,7 @@ const ProductCategoryFilter = () => {
                     />
                     <div className="formCost d-flex gap-2 align-items-center mt-3">
                         <input type="text" className="form-control form-control-sm" id="MinCost" value={mincost} onChange={(e: any) => setMincost(e.target.value)} />
-                        <span className="fw-semibold text-muted">to</span>
+                        <span className="fw-semibold text-muted">à</span>
                         <input className="form-control form-control-sm" type="text" id="maxCost" value={maxcost} onChange={(e: any) => setMaxcost(e.target.value)} />
                     </div>
                 </Card.Body>

@@ -11,19 +11,33 @@ import {
 import { Link } from "react-router-dom";
 import Breadcrumb from "Common/BreadCrumb";
 
-import { useFetchCategoriesQuery , useDeleteCategoryMutation } from "features/category/categorySlice";
+import {
+  useFetchCategoriesQuery,
+  useDeleteCategoryMutation,
+} from "features/category/categorySlice";
 import { useFetchSubCategoriesQuery } from "features/subCategory/subCategorySlice";
-import {useCreateCategoryMutation} from "features/category/categorySlice"
+import { useCreateCategoryMutation } from "features/category/categorySlice";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 // import { *asYup } from 'yup';
 
 const Categories = () => {
-
- 
-  const { data =[] } = useFetchCategoriesQuery();
-  const [createCategory] = useCreateCategoryMutation()
-  const {data:subdata=[]}=useFetchSubCategoriesQuery()
+  const notify = () => {
+    toast.success("Le catégorie a été créé avec succès", {
+      position: "top-center",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+  const { data = [] } = useFetchCategoriesQuery();
+  const [createCategory] = useCreateCategoryMutation();
+  const { data: subdata = [] } = useFetchSubCategoriesQuery();
   const [deleteCategory] = useDeleteCategoryMutation();
-
 
   const deleteHandler = async (id: any) => {
     await deleteCategory(id);
@@ -51,6 +65,7 @@ const Categories = () => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     createCategory(formData).then(() => setFormData(initialValue));
+    notify();
   };
 
   const handleFileUpload = async (
@@ -67,7 +82,7 @@ const Categories = () => {
       const fileReader = new FileReader();
       fileReader.onload = () => {
         const base64String = fileReader.result as string;
-        const base64Data = base64String.split(",")[1]; // Extract only the Base64 data
+        const base64Data = base64String.split(",")[1];
 
         resolve(base64Data);
       };
@@ -78,21 +93,17 @@ const Categories = () => {
     });
   }
 
-
-
-
   // const onSubmit = async(data:any)=>{
-   
+
   //   try {
   //     await createCategory(nom, image).unwrap()
   //     setNom('')
   //     setImage('')
-      
+
   //   } catch (error) {
   //     console.error('failed to save category')
   //   }
   // }
-
 
   document.title = "Categories | Toner eCommerce + Admin React Template";
 
@@ -162,12 +173,12 @@ const Categories = () => {
     <React.Fragment>
       <div className="page-content">
         <Container fluid={true}>
-          <Breadcrumb title="Categories" pageTitle="Products" />
+          <Breadcrumb title="Catégories" pageTitle="Produits" />
           <Row>
             <Col xxl={3}>
               <Card>
                 <Card.Header>
-                  <h6 className="card-title mb-0">Create Categories</h6>
+                  <h6 className="card-title mb-0">Créer Catégorie</h6>
                 </Card.Header>
                 <Card.Body>
                   <form
@@ -187,13 +198,13 @@ const Categories = () => {
                       <Col xxl={12} lg={6}>
                         <div className="mb-3">
                           <label htmlFor="nom" className="form-label">
-                            Category Title<span className="text-danger">*</span>
+                            Nom Catégorie<span className="text-danger">*</span>
                           </label>
                           <input
                             type="text"
                             className="form-control"
                             id="nom"
-                            placeholder="Enter title"
+                            placeholder="Taper Nom Catégorie"
                             onChange={onChange}
                             value={formData.nom}
                             required
@@ -218,10 +229,7 @@ const Categories = () => {
                       </Col> */}
                       <Col xxl={12} lg={6}>
                         <div className="mb-3">
-                          <label
-                            htmlFor="image"
-                            className="form-label d-block"
-                          >
+                          <label htmlFor="image" className="form-label d-block">
                             Image <span className="text-danger">*</span>
                           </label>
 
@@ -245,8 +253,7 @@ const Categories = () => {
                                 id="image"
                                 type="file"
                                 accept=".png, .gif, .jpeg, .jpg"
-                                onChange={(e)=>handleFileUpload(e)}
-                                
+                                onChange={(e) => handleFileUpload(e)}
                               />
                             </div>
                             <div className="avatar-lg">
@@ -288,7 +295,7 @@ const Categories = () => {
                       </Col> */}
                       <Col xxl={12}>
                         <div className="text-end">
-                          <Button variant="success" type="submit" >
+                          <Button variant="success" type="submit">
                             Ajouter Categorie
                           </Button>
                         </div>
@@ -305,7 +312,7 @@ const Categories = () => {
                     <Form.Control
                       type="text"
                       id="searchInputList"
-                      placeholder="Search Category..."
+                      placeholder="Rechercher Catégorie..."
                       onChange={(e) => searchTeamMember(e)}
                     />
                     <i className="ri-search-line search-icon"></i>
@@ -330,33 +337,32 @@ const Categories = () => {
                   </select>
                 </Col> */}
               </Row>
-              <Row id="categories-list" >
-              {data.map((category) => (
-               
-                  <Col xxl={3} lg={8} >
+              <Row id="categories-list">
+                {data.map((category) => (
+                  <Col xxl={3} lg={8}>
                     <Card className="categrory-widgets overflow-hidden">
-                      <Card.Body className="p-4" >
-                        <div className="d-flex align-items-center mb-3" >
-                          <h5
-                            className="flex-grow-1 mb-0"
+                      <Card.Body className="p-4">
+                        <div className="d-flex align-items-center mb-3">
+                          <h5 className="flex-grow-1 mb-0">{category.nom}</h5>
+                          <ul
+                            className="flex-shrink-0 list-unstyled hstack gap-1 mb-0"
                             key={category.idcategory}
                           >
-                            {category.nom}
-                          </h5>
-                          <ul className="flex-shrink-0 list-unstyled hstack gap-1 mb-0">
-                            <li>
+                            {/* <li>
                               <Link to="#" className="badge badge-soft-info">
                                 Edit
                               </Link>
-                            </li>
+                            </li> */}
                             <li>
                               <Link
                                 to="#"
                                 data-bs-toggle="modal"
                                 className="badge badge-soft-danger"
-                                
+                                onClick={() =>
+                                  deleteHandler(category.idcategory)
+                                }
                               >
-                                Delete
+                                Supprimer
                               </Link>
                             </li>
                           </ul>
@@ -373,7 +379,7 @@ const Categories = () => {
                               : null} 
                           </ul>
                         ))} */}
-                        <div className="mt-3">
+                        {/* <div className="mt-3">
                           <Link
                             to="#"
                             className="fw-medium link-effect"
@@ -385,7 +391,7 @@ const Categories = () => {
                             Read More{" "}
                             <i className="ri-arrow-right-line align-bottom ms-1"></i>
                           </Link>
-                        </div>
+                        </div> */}
                         <img
                           src={`data:image/jpeg;base64,${category.image}`}
                           alt=""
@@ -394,8 +400,7 @@ const Categories = () => {
                       </Card.Body>
                     </Card>
                   </Col>
- ))}
-               
+                ))}
               </Row>
               {pagination && (
                 <Row id="pagination-element" className="mb-4">
@@ -540,6 +545,7 @@ const Categories = () => {
           </Row>
         </div>
       </Offcanvas>
+      <ToastContainer />
     </React.Fragment>
   );
 };

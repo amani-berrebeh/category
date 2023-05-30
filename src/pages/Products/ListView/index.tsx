@@ -7,13 +7,13 @@ import ProductFilter from './ProductFilter';
 
 const ListView = () => {
 
-    document.title = "Product List | Toner eCommerce + Admin React Template";
+    document.title = "Liste des Produits | Toner eCommerce + Admin React Template";
 
     return (
         <React.Fragment>
             <div className="page-content">
                 <Container fluid>
-                    <BreadCrumb title="Product List" pageTitle="Products" />
+                    <BreadCrumb title="Liste des Produits " pageTitle="Produit" />
                     <Row>
                         <ProductFilter />
                     </Row>

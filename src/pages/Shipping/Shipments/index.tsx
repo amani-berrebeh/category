@@ -6,14 +6,14 @@ import { shipments } from "Common/data";
 import { Link } from 'react-router-dom';
 import Flatpickr from "react-flatpickr";
 import { useGetAllArrivagesQuery,useAddArrivageMutation,useDeleteArrivageMutation, Arrivage } from 'features/arrivage/arrivageSlice';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import {useFetchFournisseurQuery} from "../../../features/fournisseur/fournisseurSlice"
 
 const Shipments = () => {
 
     document.title = "Shipments | Toner eCommerce + Admin React Template";
     const notify = () => {
-        toast.success("Le Client Physique a été créé avec succès", {
+        toast.success("L'arrivage a été créé avec succès", {
           position: "top-center",
           autoClose: 1000,
           hideProgressBar: false,
@@ -41,7 +41,7 @@ const Shipments = () => {
         montantTotal: 0,
         dateArrivage: "",
         raison_sociale: "",
-        fournisseurID:9
+        fournisseurID:12
       });
     
       const {
@@ -82,13 +82,13 @@ const Shipments = () => {
                 accessor: "idArrivage"
             },
             {
-                Header: "designation",
+                Header: "Designation",
                 accessor: "designation",
                 disableFilters: true,
                 filterable: true,
             },
             {
-                Header: "montant Total",
+                Header: "Montant Total",
                 accessor: "montantTotal",
                 disableFilters: true,
                 filterable: true,
@@ -96,7 +96,7 @@ const Shipments = () => {
         
            
             {
-                Header: "date Arrivage",
+                Header: "Date Arrivage",
                 accessor: "dateArrivage",
                 disableFilters: true,
                 filterable: true,
@@ -117,10 +117,10 @@ const Shipments = () => {
                     return (
                         <ul className="hstack gap-2 list-unstyled mb-0">
                             <li>
-                                <Link to="#" className="badge badge-soft-primary edit-item-btn" >Edit</Link>
+                                <Link to="#" className="badge badge-soft-primary edit-item-btn" >Modifier</Link>
                             </li>
                             <li>
-                                <Link to="#" className="badge badge-soft-danger remove-item-btn"  onClick={()=>deleteHandler(arrivage.idArrivage)}>Delete</Link>
+                                <Link to="#" className="badge badge-soft-danger remove-item-btn"  onClick={()=>deleteHandler(arrivage.idArrivage)}>Supprimer</Link>
                             </li>
                         </ul>
                     )
@@ -134,15 +134,15 @@ const Shipments = () => {
         <React.Fragment>
             <div className="page-content">
                 <Container fluid={true}>
-                    <Breadcrumb title="Shipments" pageTitle="Shipping" />
+                    <Breadcrumb title="Arrivage" pageTitle="Tableau de bord" />
                     <Card id="shipmentsList">
                         <Card.Header className="border-bottom-dashed">
                             <Row className="align-items-center g-3">
                                 <Col xxl={3} sm={6}>
-                                    <h6 className="card-title mb-0">Shipping</h6>
+                                    <h6 className="card-title mb-0">Arrivage</h6>
                                 </Col>
                                 <Col className="col-xxl-auto col-sm-auto ms-auto">
-                                    <Button variant='success' onClick={() => tog_AddShippingModals()} className="add-btn"><i className="bi bi-plus-circle me-1 align-middle"></i> Add Shipping</Button>
+                                    <Button variant='success' onClick={() => tog_AddShippingModals()} className="add-btn"><i className="bi bi-plus-circle me-1 align-middle"></i> Ajouter Arrivage</Button>
                                 </Col>
                             </Row>
                         </Card.Header>
@@ -150,7 +150,7 @@ const Shipments = () => {
                             <Row className="g-3">
                                 <Col xxl={3} lg={6}>
                                     <div className="search-box">
-                                        <input type="text" className="form-control search" placeholder="Search for order ID, shipment no, customer, order status or something..." />
+                                        <input type="text" className="form-control search" placeholder="Rechercher arrivage par date..." />
                                         <i className="ri-search-line search-icon"></i>
                                     </div>
                                 </Col>
@@ -158,7 +158,7 @@ const Shipments = () => {
                                     {/* <input type="text" className="form-control" data-provider="flatpickr" data-date-format="d M, Y" data-range-date="true" id="demo-datepicker" placeholder="Select date" /> */}
                                     <Flatpickr
                                         className="form-control flatpickr-input"
-                                        placeholder='Select Date'
+                                        placeholder='Selectionner Date'
                                         options={{
                                             mode: "range",
                                             dateFormat: "d M, Y",
@@ -259,7 +259,7 @@ const Shipments = () => {
                                                     dateFormat: "d M, Y",
                                                 }}
                                             /> */}
-                                            <Form.Control type="text" id="dateArrivage"  placeholder="Select date" onChange={onChange} value={formData.dateArrivage} required />
+                                            <Form.Control type="text" id="dateArrivage"  placeholder="Selectionner date" onChange={onChange} value={formData.dateArrivage} required />
                                         </div>
                                     </Col>
                                     {/* <Col lg={6}>
@@ -331,10 +331,10 @@ const Shipments = () => {
                                         <div className="mb-3">
                                             <label htmlFor="statusSelect" className="form-label">Fournisseur</label>
                                             <select className="form-select" name="choices-single-default" id="statusSelect" required>
-                                                <option value="">raison sociale</option>
+                                                <option value="">Raison Sociale</option>
                                                 {allfournisseur.map((fournisseur)=>(
 
-                                                    <option key={formData.fournisseurID} value={formData.fournisseurID}>{fournisseur.idfournisseur}</option>
+                                                    <option key={formData.fournisseurID} value={formData.fournisseurID}>{fournisseur.raison_sociale}</option>
                                                 )
 
                                                 )}
@@ -345,7 +345,7 @@ const Shipments = () => {
                                     <Col lg={12}>
                                         <div className="hstack gap-2 justify-content-end">
                                             <Button className="btn-ghost-danger" onClick={() => { tog_AddShippingModals(); }} data-bs-dismiss="modal"><i className="ri-close-line align-bottom me-1"></i> Fermer</Button>
-                                            <Button variant='primary' id="add-btn" type="submit">Ajouter</Button>
+                                            <Button variant='primary' id="add-btn" onClick={() => { tog_AddShippingModals(); }} type="submit">Ajouter</Button>
                                         </div>
                                     </Col>
                                 </Row>
@@ -354,6 +354,7 @@ const Shipments = () => {
                     </Modal>
                 </Container>
             </div>
+            <ToastContainer />
         </React.Fragment>
     );
 };

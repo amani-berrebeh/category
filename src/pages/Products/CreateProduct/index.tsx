@@ -179,7 +179,7 @@ const CreateProduct = () => {
                       <Form.Control
                         type="text"
                         id="nomProduit"
-                        placeholder="Enter product title"
+                        placeholder="Taper titre du produit"
                         required
                         onChange={onChange}
                         value={formData.nomProduit}
@@ -209,7 +209,7 @@ const CreateProduct = () => {
                           id="choices-category-input"
                           name="choices-category-input"
                         >
-                          <option value="">Select product category</option>
+                          <option value="">Selectionner categorie</option>
                           {listeCategories.map((category) => (
                             <option
                               key={category.idcategory}
@@ -221,7 +221,7 @@ const CreateProduct = () => {
                         </select>
                       </div>
                       <div className="error-msg mt-1">
-                        Please select a product category.
+                        svp selectionner la categorie.
                       </div>
                     </div>
                     <div>
@@ -231,7 +231,7 @@ const CreateProduct = () => {
                         </div>
                         <div className="flex-shrink-0">
                           <Link
-                            to="/fournisseur"
+                            to="/seller-grid-view"
                             className="float-end text-decoration-underline"
                           >
                             Ajouter Nouveau
@@ -244,7 +244,7 @@ const CreateProduct = () => {
                           id="choices-fournisseur-input"
                           name="choices-fournisseur-input"
                         >
-                          <option value="">Select product fournisseur</option>
+                          <option value="">Selectionner fournisseur du produit</option>
                           {listeFournisseur.map((fournisseur) => (
                             <option
                               key={fournisseur.idfournisseur}
@@ -273,9 +273,9 @@ const CreateProduct = () => {
                         </div>
                       </div>
                       <div className="flex-grow-1">
-                        <h5 className="card-title mb-1">Product Gallery</h5>
+                        <h5 className="card-title mb-1">Image de galerie</h5>
                         <p className="text-muted mb-0">
-                          Add product gallery images.
+                          Ajouter images de galerie.
                         </p>
                       </div>
                     </div>
@@ -337,9 +337,9 @@ const CreateProduct = () => {
                         </div>
                       </div>
                       <div className="flex-grow-1">
-                        <h5 className="card-title mb-1">General Information</h5>
+                        <h5 className="card-title mb-1">Information Generale</h5>
                         <p className="text-muted mb-0">
-                          Fill all information below.
+                        Taper tous les information ci-dessus.
                         </p>
                       </div>
                     </div>
@@ -348,11 +348,11 @@ const CreateProduct = () => {
                     <Row>
                       <Col lg={6}>
                         <div className="mb-3">
-                          <Form.Label htmlFor="marque">marque</Form.Label>
+                          <Form.Label htmlFor="marque">Marque</Form.Label>
                           <Form.Control
                             type="text"
                             id="marque"
-                            placeholder="Enter marque"
+                            placeholder="Taper la marque"
                             value={formData.marque}
                             onChange={onChange}
                           />
@@ -366,7 +366,7 @@ const CreateProduct = () => {
                           <Form.Control
                             type="text"
                             id="remarqueProduit"
-                            placeholder="Enter remarqueProduit"
+                            placeholder="Taper remarque"
                             value={formData.remarqueProduit}
                             onChange={onChange}
                           />
@@ -377,7 +377,7 @@ const CreateProduct = () => {
                       <Col lg={3} sm={6}>
                         <div className="mb-3">
                           <Form.Label htmlFor="prixAchatHt">
-                            prixAchatHt
+                            Prix d'Achat HT
                           </Form.Label>
                           <div className="input-group has-validation mb-3">
                             <Form.Control
@@ -385,7 +385,7 @@ const CreateProduct = () => {
                               value={formData.prixAchatHt}
                               onChange={onChange}
                               id="prixAchatHt"
-                              placeholder="Enter price"
+                              placeholder="Taper prix"
                               aria-label="Price"
                               aria-describedby="product-price-addon"
                               required
@@ -399,12 +399,12 @@ const CreateProduct = () => {
                       <Col lg={3} sm={6}>
                         <div className="mb-3">
                           <Form.Label htmlFor="prixAchatTtc">
-                            prixAchatTtc
+                            Prix d'Achat TTC
                           </Form.Label>
                           <Form.Control
                             type="text"
                             id="prixAchatTtc"
-                            placeholder="Stocks"
+                            placeholder="Prix Achat TTC"
                             required
                             onChange={onChange}
                             value={formData.prixAchatTtc}
@@ -416,11 +416,11 @@ const CreateProduct = () => {
                       </Col>
                       <Col lg={3} sm={6}>
                         <div className="mb-3">
-                          <Form.Label htmlFor="prixVente">prixVente</Form.Label>
+                          <Form.Label htmlFor="prixVente">Prix de Vente</Form.Label>
                           <Form.Control
                             type="text"
                             id="prixVente"
-                            placeholder="prixVente"
+                            placeholder=" Taper Prix de Vente"
                             required
                             value={formData.prixVente}
                             onChange={onChange}
@@ -432,7 +432,7 @@ const CreateProduct = () => {
                       </Col>
                       <Col lg={3} sm={6}>
                         <div className="mb-3">
-                          <Form.Label htmlFor="remise">remise</Form.Label>
+                          <Form.Label htmlFor="remise">Remise</Form.Label>
                           <div className="input-group has-validation mb-3">
                             <span
                               className="input-group-text"
@@ -445,7 +445,7 @@ const CreateProduct = () => {
                               value={formData.remise}
                               onChange={onChange}
                               id="remise"
-                              placeholder="Enter discount"
+                              placeholder="Taper Remise"
                               aria-label="discount"
                               aria-describedby="product-discount-addon"
                               required

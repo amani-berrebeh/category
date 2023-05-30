@@ -203,7 +203,7 @@ const SellersGridView = () => {
     <React.Fragment>
       <div className="page-content">
         <Container fluid={true}>
-          <Breadcrumb title="Fournisseur" pageTitle="Toner" />
+          <Breadcrumb title="Fournisseur" pageTitle="Tableau de bord" />
           <Row>
             <Col xl={3} md={6}>
               <Card className="card-animate bg-info-subtle border-0 overflow-hidden">
@@ -771,7 +771,7 @@ const SellersGridView = () => {
                             <img
                               src={`data:image/jpeg;base64, ${formData.logo}`}
                               alt={formData.raison_sociale}
-                              id="company-img"
+                              id="logo"
                               className="avatar-md h-auto rounded-3 object-fit-cover"
                             />
                           </div>
@@ -832,14 +832,12 @@ const SellersGridView = () => {
                     <Col md={6}>
                       <div className="mb-3">
                         <Form.Label htmlFor="type">Type Fournisseur</Form.Label>
-                        <Form.Control
-                          type="text"
-                          id="type"
-                          placeholder="Entrer type"
-                          required
-                          onChange={onChange}
-                          value={formData.type}
-                        />
+                        <select className="form-select" data-choices data-choices-search-false id="choices-payment-status" required>
+                                                    <option value="">Selectionner Type de Fournisseur</option>
+                                                    <option value="Morale">Morale</option>
+                                                    <option value="Physique">Physique</option>
+                                                   
+                                                </select>
                       </div>
                     </Col>
                     <Col md={6}>
@@ -873,14 +871,12 @@ const SellersGridView = () => {
                     <Col md={6}>
                       <div className="mb-3">
                         <Form.Label htmlFor="etat">Etat Fournisseur</Form.Label>
-                        <Form.Control
-                          type="text"
-                          id="etat"
-                          placeholder="Entrer Etat"
-                          required
-                          onChange={onChange}
-                          value={formData.etat}
-                        />
+                        <select className="form-select" data-choices data-choices-search-false id="choices-payment-status" required>
+                                                    <option value="">Selectionner Etat</option>
+                                                    <option value="Actif">Actif</option>
+                                                    <option value="Inactif">Inactif</option>
+                                                   
+                                                </select>
                       </div>
                     </Col>
                     <div className="text-center mb-3">
@@ -969,7 +965,7 @@ const SellersGridView = () => {
                           inactif
                         </span>
                       ) : (
-                        <span className="badge badge-soft-access text-uppercase">
+                        <span className="badge badge-soft-success text-uppercase">
                           actif
                         </span>
                       )}
@@ -992,9 +988,9 @@ const SellersGridView = () => {
                       </div>
                     </Row>
                     <div className="mt-4 hstack gap-2">
-                      <Button variant="soft-secondary" className="w-100">
+                      {/* <Button variant="soft-secondary" className="w-100">
                         Voir détails
-                      </Button>
+                      </Button> */}
                       <Dropdown className="flex-shrink-0">
                         <Dropdown.Toggle className="btn btn-soft-info btn-icon arrow-none">
                           <i className="ph-dots-three-outline-vertical-fill"></i>

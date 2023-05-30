@@ -21,7 +21,7 @@ const ProductFilter = () => {
                 <h5 className="card-title mb-0">Filtres</h5>
               </div>
               <div className="flex-shrink-0">
-                <Link to="#" className="text-decoration-underline" id="clearall">Clear All</Link>
+                <Link to="#" className="text-decoration-underline" id="clearall">Effacer Tout</Link>
               </div>
             </div>
           </Card.Header>

@@ -198,21 +198,17 @@ const InvoiceListTable = () => {
                                         <div className="input-light">
                                             <select className="form-control" data-choices data-choices-search-false name="choices-single-default" id="idStatus">
                                                 <option value="">Status</option>
-                                                <option defaultValue="all">All</option>
-                                                <option value="Unpaid">Unpaid</option>
-                                                <option value="Paid">Paid</option>
-                                                <option value="Cancel">Cancel</option>
-                                                <option value="Refund">Refund</option>
+                                                <option defaultValue="all">Tous</option>
+                                                <option value="Unpaid">Payée</option>
+                                                <option value="Paid">Impayée</option>
+                                                <option value="Cancel">Annulée</option>
+                                                <option value="Refund">Remboursée</option>
                                             </select>
                                         </div>
                                     </Col>
 
 
-                                    <Col xxl={1} sm={4}>
-                                        <Button variant="info" type="button" className="w-100" >
-                                            <i className="ri-equalizer-fill me-1 align-bottom"></i> Filters
-                                        </Button>
-                                    </Col>
+                                    
 
                                 </Row>
 
