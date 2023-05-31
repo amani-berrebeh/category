@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-interface Category {
+export interface Category {
     idcategory: number,
     nom: string,
     image: string,

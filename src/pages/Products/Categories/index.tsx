@@ -367,19 +367,19 @@ const Categories = () => {
                             </li>
                           </ul>
                         </div>
-                        {/* { subdata.map((subcategory) => (
+                        {/* { subdata.map((subcategory) => ( */}
 
                           <ul  className="list-unstyled vstack gap-2 mb-0">
                            
-                                    {subcategory.parentID === category.idcategory ? 
-                            <li key={subcategory.idSubCategory}> 
-                           {subcategory.title}
+                                   
+                            <li > 
+                           <Link to="#" className="text-reset"></Link>
 
                             </li> 
-                              : null} 
+                          
                           </ul>
-                        ))} */}
-                        {/* <div className="mt-3">
+                        {/* ))}  */}
+                         <div className="mt-3">
                           <Link
                             to="#"
                             className="fw-medium link-effect"
@@ -391,7 +391,7 @@ const Categories = () => {
                             Read More{" "}
                             <i className="ri-arrow-right-line align-bottom ms-1"></i>
                           </Link>
-                        </div> */}
+                        </div> 
                         <img
                           src={`data:image/jpeg;base64,${category.image}`}
                           alt=""

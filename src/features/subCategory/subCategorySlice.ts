@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-interface SubCategory {
+export interface SubCategory {
     idSubCategory: number,
     title: string,
     subDescription: string,

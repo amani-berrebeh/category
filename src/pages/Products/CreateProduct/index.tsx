@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import Breadcrumb from "Common/BreadCrumb";
 import { Link, useNavigate } from "react-router-dom";
@@ -14,10 +14,59 @@ import {
   useDeleteProduitMutation,
   useFetchProduitsQuery,
 } from "features/produit/productSlice";
-import { useFetchCategoriesQuery } from "features/category/categorySlice";
+import { Category, useFetchCategoriesQuery } from "features/category/categorySlice";
 import { useFetchFournisseurQuery } from "features/fournisseur/fournisseurSlice";
+import { SubCategory } from "features/subCategory/subCategorySlice";
 
 const CreateProduct = () => {
+
+  const [category, setCategory]= useState<Category[]>([]);
+  const [categoryid, setCategoryid]= useState('');
+  const [sousCat, setSousCat]= useState<SubCategory[]>([]);
+
+  useEffect( ()=>{
+   const getcategory= async ()=>{
+     const req= await fetch("http://localhost:8000/category/all");
+     const getres= await req.json();
+     console.log(getres);
+     setCategory(await getres);
+     console.log(sousCat)
+
+   }
+   getcategory();
+
+
+  },[]);
+ 
+  
+  const handlecategory=(event: React.ChangeEvent<HTMLSelectElement>)=>{
+    const getcoutryid= event.target.value;
+    setCategoryid(getcoutryid);
+    event.preventDefault();
+    
+  }
+
+  useEffect( ()=>{
+
+    const getSousCat= async ()=>{
+      const resstate= await fetch(`http://localhost:8000/subCategory/onesubcategory?idcategory=${categoryid}`,{
+        method: 'GET',
+        mode: "cors",
+        headers : {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }
+      });
+      console.log(resstate)
+      const getst= resstate.json();
+      setSousCat(await getst);
+
+    }
+    getSousCat();
+
+  },[categoryid]);
+
+
   const notify = () => {
     toast.success("Le produit a été créé avec succès", {
       position: "top-center",
@@ -35,6 +84,7 @@ const CreateProduct = () => {
 
   const { data = [] } = useFetchProduitsQuery();
   const { data: listeCategories = [] } = useFetchCategoriesQuery();
+
   const { data: listeFournisseur = [] } = useFetchFournisseurQuery();
   const [createProduct] = useAddProduitMutation();
 
@@ -208,14 +258,47 @@ const CreateProduct = () => {
                           className="form-select"
                           id="choices-category-input"
                           name="choices-category-input"
+                          onChange={handlecategory}
                         >
                           <option value="">Selectionner categorie</option>
-                          {listeCategories.map((category) => (
+                          {category.map((category) => (
                             <option
                               key={category.idcategory}
-                              value={formData.nom}
+                              value={category.nom}
                             >
                               {category.nom}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="error-msg mt-1">
+                        svp selectionner la categorie.
+                      </div>
+                    </div>
+                    <div>
+                      <div className="d-flex align-items-start">
+                        <div className="flex-grow-1">
+                          <Form.Label>Sous Catégorie</Form.Label>
+                        </div>
+                        <div className="flex-shrink-0">
+                          <Link
+                            to="/sub-categories"
+                            className="float-end text-decoration-underline"
+                          >
+                            Ajouter Nouvelle sous-categorie
+                          </Link>
+                        </div>
+                      </div>
+                      <div>
+                        <select
+                          className="form-select"
+                          id="choices-category-input"
+                          name="choices-category-input"
+                        >
+                          <option value="">Selectionner sous-categorie</option>
+                          {sousCat.map((souscategory)=> (
+                            <option key={souscategory.idSubCategory} value={souscategory.idSubCategory}>
+                              {souscategory.title}
                             </option>
                           ))}
                         </select>
@@ -234,7 +317,7 @@ const CreateProduct = () => {
                             to="/seller-grid-view"
                             className="float-end text-decoration-underline"
                           >
-                            Ajouter Nouveau
+                            Ajouter Nouveau Fournisseur
                           </Link>
                         </div>
                       </div>
