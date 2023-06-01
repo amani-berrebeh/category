@@ -16,55 +16,52 @@ import {
 } from "features/produit/productSlice";
 import { Category, useFetchCategoriesQuery } from "features/category/categorySlice";
 import { useFetchFournisseurQuery } from "features/fournisseur/fournisseurSlice";
-import { SubCategory } from "features/subCategory/subCategorySlice";
+import { SubCategory, useFetchSubCategoriesQuery } from "features/subCategory/subCategorySlice";
 
 const CreateProduct = () => {
 
   const [category, setCategory]= useState<Category[]>([]);
-  const [categoryid, setCategoryid]= useState('');
-  const [sousCat, setSousCat]= useState<SubCategory[]>([]);
+  const[categoryid,setCategoryid]=useState('');
+  const [sousCategory, setSousCategory]= useState<SubCategory[]>([]);
+  const [sousCategoryid, setSousCategoryid]= useState('');
 
+  
+ 
+
+  
   useEffect( ()=>{
-   const getcategory= async ()=>{
-     const req= await fetch("http://localhost:8000/category/all");
-     const getres= await req.json();
-     console.log(getres);
-     setCategory(await getres);
-     console.log(sousCat)
-
-   }
-   getcategory();
-
-
+    const getCategory = async()=>{
+      const reqdata= await fetch("http://localhost:8000/category/all");
+      const resdata= await reqdata.json();
+      //console.log(resdata);
+      setCategory(resdata);
+    }
+    getCategory();
   },[]);
  
-  
-  const handlecategory=(event: React.ChangeEvent<HTMLSelectElement>)=>{
-    const getcoutryid= event.target.value;
-    setCategoryid(getcoutryid);
-    event.preventDefault();
-    
+  const handlecategory =async(e:React.ChangeEvent<HTMLSelectElement>)=>{
+    const categoryid= e.target.value;
+    //if(categoryid!=='')
+   // { 
+      const reqstatedata= await fetch(`http://localhost:8000/subCategory/onesubcategory?idcategory=${categoryid}`);
+      const resstatedata= await reqstatedata.json();
+      setSousCategory(await resstatedata);
+      console.log(reqstatedata)
+      setCategoryid(categoryid);
+           
+//} else {    
+   //   setSousCategory([]);
+     
+   // }
+    console.log(categoryid);
   }
 
-  useEffect( ()=>{
+  const handlesousCategory= (e:React.ChangeEvent<HTMLSelectElement>)=>{
+    const getstateid= e.target.value;
+    setSousCategoryid(getstateid);
+  }
 
-    const getSousCat= async ()=>{
-      const resstate= await fetch(`http://localhost:8000/subCategory/onesubcategory?idcategory=${categoryid}`,{
-        method: 'GET',
-        mode: "cors",
-        headers : {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }
-      });
-      console.log(resstate)
-      const getst= resstate.json();
-      setSousCat(await getst);
 
-    }
-    getSousCat();
-
-  },[categoryid]);
 
 
   const notify = () => {
@@ -294,13 +291,15 @@ const CreateProduct = () => {
                           className="form-select"
                           id="choices-category-input"
                           name="choices-category-input"
+                          onChange={handlesousCategory}
+                          
                         >
-                          <option value="">Selectionner sous-categorie</option>
-                          {sousCat.map((souscategory)=> (
+                           <option value="">Selectionner sous-categorie</option>
+                          {sousCategory.map((souscategory)=> (
                             <option key={souscategory.idSubCategory} value={souscategory.idSubCategory}>
                               {souscategory.title}
                             </option>
-                          ))}
+                          ))} 
                         </select>
                       </div>
                       <div className="error-msg mt-1">
