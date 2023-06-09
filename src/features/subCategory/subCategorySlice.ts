@@ -24,8 +24,8 @@ export const subCategorySlice = createApi({
             providesTags: ['SubCategory']
         }),
         fetchOneSybCategory: builder.query<SubCategory, number|void>({
-            query(idSubCategory) {
-                return `/one/${idSubCategory}`;
+            query(categoryid) {
+                return `/one/${categoryid}`;
             },
             providesTags: ['SubCategory']
         }),

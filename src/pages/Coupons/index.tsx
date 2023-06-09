@@ -11,7 +11,7 @@ import {
 } from "react-bootstrap";
 import Breadcrumb from "Common/BreadCrumb";
 import TableContainer from "Common/TableContainer";
-import { couponsList } from "Common/data";
+
 import { Link } from "react-router-dom";
 import Flatpickr from "react-flatpickr";
 import "react-toastify/dist/ReactToastify.css";

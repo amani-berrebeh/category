@@ -18,6 +18,7 @@ import { chargesSlice } from "../features/charge/chargeSlice";
 import {clientMoraleSlice} from "../features/clientMoral/clientMoralSlice"
 import {arrivageSlice} from "../features/arrivage/arrivageSlice"
 import { facturetSlice } from "features/facture/factureSlice";
+import { arrivageProduitSlice } from "features/arrivageProduit/arrivageProduitSlice";
 export const store = configureStore({
   reducer: {
     [categorySlice.reducerPath]: categorySlice.reducer,
@@ -29,6 +30,7 @@ export const store = configureStore({
     [clientMoraleSlice.reducerPath]: clientMoraleSlice.reducer,
     [arrivageSlice.reducerPath]:arrivageSlice.reducer,
     [facturetSlice.reducerPath]:facturetSlice.reducer,
+    [arrivageProduitSlice.reducerPath]: arrivageProduitSlice.reducer,
     Layout: LayoutReducer,
     Calendar: CalendarReducer,
     Login: LoginReducer,
@@ -47,7 +49,8 @@ export const store = configureStore({
       chargesSlice.middleware,
       clientMoraleSlice.middleware,
       arrivageSlice.middleware,
-      facturetSlice.middleware
+      facturetSlice.middleware,
+      arrivageProduitSlice.middleware
     ]);
   },
 });

@@ -15,7 +15,7 @@ import {
   useFetchCategoriesQuery,
   useDeleteCategoryMutation,
 } from "features/category/categorySlice";
-import { useFetchSubCategoriesQuery } from "features/subCategory/subCategorySlice";
+import { useFetchOneSybCategoryQuery, SubCategory } from "features/subCategory/subCategorySlice";
 import { useCreateCategoryMutation } from "features/category/categorySlice";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -36,8 +36,12 @@ const Categories = () => {
   };
   const { data = [] } = useFetchCategoriesQuery();
   const [createCategory] = useCreateCategoryMutation();
-  const { data: subdata = [] } = useFetchSubCategoriesQuery();
+  const {data:SubCategory=[]}= useFetchOneSybCategoryQuery();
   const [deleteCategory] = useDeleteCategoryMutation();
+
+  
+
+  
 
   const deleteHandler = async (id: any) => {
     await deleteCategory(id);
@@ -52,8 +56,10 @@ const Categories = () => {
     title: "",
   };
 
+
   const [formData, setFormData] = useState(initialValue);
   const { nom, image } = formData;
+ 
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prevState) => ({
@@ -92,18 +98,6 @@ const Categories = () => {
       fileReader.readAsDataURL(file);
     });
   }
-
-  // const onSubmit = async(data:any)=>{
-
-  //   try {
-  //     await createCategory(nom, image).unwrap()
-  //     setNom('')
-  //     setImage('')
-
-  //   } catch (error) {
-  //     console.error('failed to save category')
-  //   }
-  // }
 
   document.title = "Categories | Toner eCommerce + Admin React Template";
 
@@ -341,12 +335,12 @@ const Categories = () => {
                 {data.map((category) => (
                   <Col xxl={3} lg={8}>
                     <Card className="categrory-widgets overflow-hidden">
-                      <Card.Body className="p-4">
+                      <Card.Body className="p-4" key={category.idcategory}> 
                         <div className="d-flex align-items-center mb-3">
                           <h5 className="flex-grow-1 mb-0">{category.nom}</h5>
                           <ul
                             className="flex-shrink-0 list-unstyled hstack gap-1 mb-0"
-                            key={category.idcategory}
+                            
                           >
                             {/* <li>
                               <Link to="#" className="badge badge-soft-info">
@@ -367,18 +361,21 @@ const Categories = () => {
                             </li>
                           </ul>
                         </div>
-                        {/* { subdata.map((subcategory) => ( */}
+                        {/* {SubCategory.map((SubCategory) => (  */}
 
-                          <ul  className="list-unstyled vstack gap-2 mb-0">
-                           
+                          {/* <ul  className="list-unstyled vstack gap-2 mb-0"
+                          
+
+                          
+                          >
                                    
                             <li > 
-                           <Link to="#" className="text-reset"></Link>
+                            <h6 className="flex-grow-1 mb-0">{SubCategory.title}</h6>
 
                             </li> 
                           
                           </ul>
-                        {/* ))}  */}
+                         ))}   */}
                          <div className="mt-3">
                           <Link
                             to="#"

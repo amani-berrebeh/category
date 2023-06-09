@@ -43,11 +43,12 @@ function GlobalFilter({
       )}
       <Col className="col-sm">
         {/* <div className="search-box me-xxl-2 my-3 my-xxl-0 d-inline-block"> */}
-        <div className="d-flex justify-content-sm-end">
+        <div className="search-box mb-3 mb-lg-0">
           <label htmlFor="search-bar-0" className="search-label">
             {/* <span id="search-bar-0-label" className="sr-only">
                 Search this table
               </span> */}
+              <i className="bx bx-search-alt search-icon"></i>
             <input
               onChange={e => {
                 setValue(e.target.value);
@@ -60,7 +61,7 @@ function GlobalFilter({
               value={value || ""}
             />
           </label>
-          <i className="bx bx-search-alt search-icon"></i>
+          
         </div>
         {/* </div> */}
       </Col>

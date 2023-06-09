@@ -2,16 +2,22 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import Breadcrumb from "Common/BreadCrumb";
 import SubCategoriesTable from "./subCategoriesTable";
-import { useFetchCategoriesQuery } from "features/category/categorySlice";
+import {
+  Category,
+  useFetchCategoriesQuery,
+} from "features/category/categorySlice";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
-import { useCreateSubCategoryMutation } from "features/subCategory/subCategorySlice";
+import {
+  useCreateSubCategoryMutation,
+  useFetchSubCategoriesQuery,
+} from "features/subCategory/subCategorySlice";
 import { useDeleteSubCategoryMutation } from "features/subCategory/subCategorySlice";
+import { string } from "yup";
 
 const SubCategories = () => {
-  // const [categoryList, setCategoryList] = useState([{'nom':'','idcategory':''}])
-
   const { data = [] } = useFetchCategoriesQuery();
+  const { data: subCategory = [] } = useFetchSubCategoriesQuery();
   const notify = () => {
     toast.success("Le sous-catégorie a été créé avec succès", {
       position: "top-center",
@@ -27,6 +33,11 @@ const SubCategories = () => {
 
   const [createSubCategory] = useCreateSubCategoryMutation();
   const [deleteSubCategory] = useDeleteSubCategoryMutation();
+  const[categoryid,setCategoryid]=useState('');
+
+
+ const handlecategory =async(e:React.ChangeEvent<HTMLSelectElement>)=>{
+    const categoryid= e.target.value}
 
   const deleteHandler = async (id: any) => {
     await deleteSubCategory(id);
@@ -34,15 +45,15 @@ const SubCategories = () => {
 
   const initialValue = {
     idSubCategory: 1,
-    title: "",
+    title:  "",
     subDescription: "",
-    parentID: 6,
+    parentID: 1,
     nom: "",
-    idcategory: 6,
+    idcategory: 1,
   };
 
   const [formData, setFormData] = useState(initialValue);
-  const { nom, idSubCategory, title, subDescription, parentID, idcategory } =
+  const {idSubCategory, title, subDescription, parentID, nom, idcategory } =
     formData;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,6 +67,12 @@ const SubCategories = () => {
     e.preventDefault();
     createSubCategory(formData).then(() => setFormData(initialValue));
     notify();
+  };
+
+  const [selectedValue, setSelectedValue] = useState<string>();
+
+  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedValue(event.target.value);
   };
 
   document.title = "Sous-Catégorie | Toner eCommerce + Admin React Template";
@@ -78,7 +95,7 @@ const SubCategories = () => {
                     autoComplete="off"
                     className="needs-validation createCategory-form"
                     id="createCategory-form"
-                    noValidate
+                    
                     onSubmit={onSubmit}
                   >
                     <input
@@ -120,18 +137,21 @@ const SubCategories = () => {
                             className="form-select"
                             name="categorySelect"
                             id="categorySelect"
+                            
+                            onSelect={handlecategory}
+                           
                           >
                             <option>Choisir Catégorie</option>
                             {data.map((category) => (
                               <option
-                                value={category.nom}
-                                key={category.idcategory}
+                                key={category.idcategory} value={category.idcategory}
+                                
                               >
                                 {category.nom}
                               </option>
                             ))}
                           </select>
-
+                          {categoryid && <h2>{categoryid}</h2>}
                           <div className="error-msg mt-n3">
                             Please select a category.
                           </div>

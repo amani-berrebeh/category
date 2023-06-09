@@ -25,10 +25,6 @@ const CreateProduct = () => {
   const [sousCategory, setSousCategory]= useState<SubCategory[]>([]);
   const [sousCategoryid, setSousCategoryid]= useState('');
 
-  
- 
-
-  
   useEffect( ()=>{
     const getCategory = async()=>{
       const reqdata= await fetch("http://localhost:8000/category/all");
@@ -41,18 +37,14 @@ const CreateProduct = () => {
  
   const handlecategory =async(e:React.ChangeEvent<HTMLSelectElement>)=>{
     const categoryid= e.target.value;
-    //if(categoryid!=='')
-   // { 
+    
       const reqstatedata= await fetch(`http://localhost:8000/subCategory/onesubcategory?idcategory=${categoryid}`);
       const resstatedata= await reqstatedata.json();
       setSousCategory(await resstatedata);
       console.log(reqstatedata)
       setCategoryid(categoryid);
            
-//} else {    
-   //   setSousCategory([]);
-     
-   // }
+
     console.log(categoryid);
   }
 
@@ -81,6 +73,7 @@ const CreateProduct = () => {
 
   const { data = [] } = useFetchProduitsQuery();
   const { data: listeCategories = [] } = useFetchCategoriesQuery();
+  
 
   const { data: listeFournisseur = [] } = useFetchFournisseurQuery();
   const [createProduct] = useAddProduitMutation();
@@ -261,7 +254,7 @@ const CreateProduct = () => {
                           {category.map((category) => (
                             <option
                               key={category.idcategory}
-                              value={category.nom}
+                              value={category.idcategory}
                             >
                               {category.nom}
                             </option>
