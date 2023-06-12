@@ -3,7 +3,7 @@ import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import Breadcrumb from "Common/BreadCrumb";
 import Swal from "sweetalert2";
 import { useAddArrivageMutation } from "features/arrivage/arrivageSlice";
-import { useFetchFournisseurQuery } from "../../../features/fournisseur/fournisseurSlice";
+import { Fournisseur, useFetchFournisseurQuery } from "../../../features/fournisseur/fournisseurSlice";
 import {
   useAddProduitMutation,
   useFetchProduitsQuery,
@@ -28,8 +28,9 @@ const AddArrivageProduit = () => {
 
   const [arrProduit, setArrProduit] = useState<ArrivageProduit[]>([]);
   const [selected, setSelected] = useState<ArrivageProduit[]>([]);
+  const [fournisseur, setFournisseur] = useState<Fournisseur[]>([]);
   const [arrProduitID, setArrProduitID] = useState("");
-  const [data=[]]=useFetchFournisseurQuery();
+  
 
   useEffect(() => {
     const getArrivageProduit = async () => {
@@ -42,6 +43,21 @@ const AddArrivageProduit = () => {
     };
     getArrivageProduit();
   }, []);
+
+// fetch liste des fournisseur
+  useEffect(() => {
+    const getFournisseur = async () => {
+      const reqdata = await fetch(
+        "http://localhost:8000/fournisseur/all"
+      );
+      const resdata = await reqdata.json();
+      console.log(resdata);
+      setFournisseur(resdata);
+    };
+    getFournisseur();
+  }, []);
+
+
 
   const handleArrivageProduit = async (
     e: React.ChangeEvent<HTMLSelectElement>
@@ -61,8 +77,7 @@ const AddArrivageProduit = () => {
     console.log(arrivageProduitId);
   };
 
-  // All Fournisseur
-  const { data: allfournisseur = [] } = useFetchFournisseurQuery();
+  
 
   // All Products
   const { data: allProduit = [] } = useFetchProduitsQuery();
@@ -198,10 +213,10 @@ const AddArrivageProduit = () => {
                       name="choices-single-default"
                       id="statusSelect"
                       required
-                      onChange={handleFournisseur}
+                      // onChange={handleFournisseur}
                     >
                       <option value="">Raison Sociale</option>
-                       {allfournisseur.map((fournisseur) => (
+                       {fournisseur.map((fournisseur) => (
                           <option
                             key={fournisseur.idfournisseur}
                             value={fournisseur.idfournisseur}

@@ -24,9 +24,10 @@ import {
   useAddClientMoraleMutation,
   useFetchClientMoralesQuery,
 } from "features/clientMoral/clientMoralSlice";
-import Component from "./Component";
-import ComponentTwo from './ComponentTwo';
-import ComponentZero from "./ComponentZero";
+
+import PaiementCheque from "./PaiementCheque";
+import PaiementTotal from "./PaiementTotal";
+import PaiementEspece from "./PaiementEspece";
 
 
 
@@ -524,10 +525,10 @@ const ProInvoice = () => {
                        
                       </select>
                      
-                      {selectedd === "Paiement total en espèces"?<ComponentZero/>:"" }
+                      {selectedd === "Paiement total en espèces"?<PaiementTotal/>:"" }
 
-{selectedd === "Paiement partiel espèces"?<Component/>:"" }
-{selectedd === "Paiement partiel chèque"?<ComponentTwo/>:"" }
+{selectedd === "Paiement partiel espèces"?<PaiementEspece/>:"" }
+{selectedd === "Paiement partiel chèque"?<PaiementCheque/>:"" }
                     </div>
                     
                   </Col>

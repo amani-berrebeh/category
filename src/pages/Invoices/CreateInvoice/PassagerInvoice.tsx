@@ -23,9 +23,20 @@ import {
   useAddClientPhysiqueMutation,
   useFetchClientPhysiquesQuery,
 } from "features/clientPhysique/clientPhysiqueSlice";
+import PaiementTotal from "./PaiementTotal";
+import PaiementEspece from "./PaiementEspece";
+import PaiementCheque from "./PaiementCheque";
 
 const PassagerInvoice = () => {
   document.title = "Créer Facture | Radhouani";
+
+
+  const [selectedd,setSelectedd]=useState('Paiement total en espèces')
+
+    const handleChangeselect=(e:React.ChangeEvent<HTMLSelectElement>)=>{
+        console.log(e.target.value)
+        setSelectedd(e.target.value)
+    }
 
   const [clientPhysique, setClientPhysique] = useState<ClientPhysique[]>([]);
   const [selected, setSelected] = useState<ClientPhysique[]>([]);
@@ -498,25 +509,29 @@ const PassagerInvoice = () => {
                   </Table>
                 </div>
                 <Row className="mt-3">
-                  <Col lg={4}>
+                  <Col lg={12}>
                     <div className="mb-2">
                       <Form.Label
                         htmlFor="choices-payment-type"
                         className="text-muted text-uppercase fw-semibold"
                       >
-                        Payment Details
+                        Reglement
                       </Form.Label>
                       <select
                         className="form-select"
                         data-choices
                         data-choices-search-false
                         id="choices-payment-type"
+                        value={selectedd} onChange={(e)=>handleChangeselect(e)}
                       >
-                        <option value="">Methode de Payement</option>
-                        <option value="Mastercard">Espèce</option>
-                        <option value="Credit Card">par chèque</option>
-                        <option value="Visa">Visa</option>
+                         <option value='Paiement total en espèces' >Paiement total en espèces</option>
+                        <option value='Paiement partiel espèces'>Paiement partiel espèces</option>
+                        <option value='Paiement partiel chèque'>Paiement partiel chèque</option>
                       </select>
+                      {selectedd === "Paiement total en espèces"?<PaiementTotal/>:"" }
+
+{selectedd === "Paiement partiel espèces"?<PaiementEspece/>:"" }
+{selectedd === "Paiement partiel chèque"?<PaiementCheque/>:"" }
                     </div>
                     {/* <div className="mb-2">
                                                     <Form.Control type="text" id="cardholderName" placeholder="Card Holder Name" />
@@ -524,13 +539,7 @@ const PassagerInvoice = () => {
                     {/* <div className="mb-2">
                                                     <Form.Control type="number" id="cardNumber" placeholder="xxxx xxxx xxxx xxxx" />
                                                 </div> */}
-                    <div>
-                      <Form.Control
-                        type="number"
-                        id="amountTotalPay"
-                        placeholder="0.00"
-                      />
-                    </div>
+                   
                   </Col>
                 </Row>
                 <div className="mt-4">
